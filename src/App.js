@@ -1,16 +1,14 @@
 import './App.css';
 import LogIn from './LogIn';
 import SignUp from './SignUp';
-import Header from './Header';
-import FooterMenu from './FooterMenu';
+import Habits from './Habits';
 
 function App() {
   return (
     <div className="App">
       {/* <LogIn />
       <SignUp /> */}
-      <Header />
-      <FooterMenu />
+      <Habits />
     </div>
   );
 }
