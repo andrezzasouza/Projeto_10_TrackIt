@@ -1,4 +1,7 @@
 // import styled from "styled-components";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import Loader from "react-loader-spinner";
+
 import { Container, Logo, InputStyle, BigButton, Alternate } from "./LogInSignUp";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -10,9 +13,12 @@ export default function SignUp() {
   const [createPassword, setCreatePassword] = useState("");
   const [createName, setCreateName] = useState("");
   const [createPhoto, setCreatePhoto] = useState("");
+  const [enabled, setEnabled] = useState(true);
 
   function signingUp (e) {
     e.preventDefault();
+    setEnabled(false);
+    
     const signUpData = {
       email: createEmail,
       name: createName,
@@ -40,6 +46,7 @@ export default function SignUp() {
       <Logo src="./trackit.png" alt="Logo do TrackIt" />
       <form onSubmit={signingUp}>
         <InputStyle
+          clickable={enabled}
           placeholder="email"
           type="email"
           value={createEmail}
@@ -47,6 +54,7 @@ export default function SignUp() {
           required
         />
         <InputStyle
+          clickable={enabled}
           placeholder="senha"
           type="password"
           value={createPassword}
@@ -54,6 +62,7 @@ export default function SignUp() {
           required
         />
         <InputStyle
+          clickable={enabled}
           placeholder="nome"
           type="text"
           value={createName}
@@ -61,13 +70,29 @@ export default function SignUp() {
           required
         />
         <InputStyle
+          clickable={enabled}
           placeholder="foto"
           type="url"
           value={createPhoto}
           onChange={(e) => setCreatePhoto(e.target.value)}
           required
         />
-        <BigButton type="submit">Cadastrar</BigButton>
+        <BigButton 
+          type="submit"
+          clickable={enabled}
+        >
+          {enabled ? (
+            'Cadastrar'
+           ) : (
+            <Loader
+              type="ThreeDots"
+              color="#FFFFFF"
+              height={45}
+              width={51}
+              // timeout={3000}
+            />
+           )}
+        </BigButton>
       </form>
       <Link to="/">
         <Alternate>Já tem uma conta? Faça login!</Alternate>
