@@ -1,7 +1,10 @@
-import Header from './Header';
-import FooterMenu from './FooterMenu';
+import Header from '../Header';
+import FooterMenu from '../FooterMenu';
+import AddHabit from './AddHabit';
+
 import styled from 'styled-components';
-import { Input } from './LogInSignUp';
+import { IoTrashOutline, IoAddSharp } from 'react-icons/io5';
+import { DayButton, DayHolder } from '../LogInSignUp';
 
 export default function Habits () {
   return (
@@ -9,10 +12,16 @@ export default function Habits () {
       <Header />
       <MyHabits>
         <h2>Meus hábitos</h2>
-        <button>+</button>
+        <button>
+          <IoAddSharp color={"#FFFFFF"} title={""} font-size="25px" />
+        </button>
       </MyHabits>
-      <AddHabit>
-        <Input placeholder="nome do hábito" />
+      <AddHabit />
+      <CreatedHabits>
+        <p>Ler 1 capítulo de livro</p>
+        <IconHolder>
+          <IoTrashOutline color={"#666666"} />
+        </IconHolder>
         <DayHolder>
           <DayButton>D</DayButton>
           <DayButton>S</DayButton>
@@ -22,11 +31,7 @@ export default function Habits () {
           <DayButton>S</DayButton>
           <DayButton>S</DayButton>
         </DayHolder>
-        <ButtonHolder>
-          <button>Cancelar</button>
-          <button>Salvar</button>
-        </ButtonHolder>
-      </AddHabit>
+      </CreatedHabits>
       <NoHabits>
         <p>
           Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
@@ -79,43 +84,25 @@ const NoHabits = styled.div`
   color: #666666;
 `;
 
-const AddHabit = styled.div`
+const CreatedHabits = styled.div`
   width: 340px;
-  height: 180px;
   border-radius: 5px;
-  padding: 18px 18px 15px 19px;
-  margin: 0 0 29px;
+  padding: 13px 11px 15px 15px;
   background-color: #ffffff;
-`;
+  margin: 0 0 10px;
+  position: relative;
 
-const DayHolder = styled.div`
-  display: flex;
-  margin: 0 0 29px;
-`
-
-const DayButton = styled.button`
-  width: 30px;
-  height: 30px;
-  border: 1px solid #d5d5d5;
-  box-sizing: border-box;
-  border-radius: 5px;
-  margin-right: 4px;
-  background-color: #ffffff;
-  color: #dbdbdb;
-`;
-
-const ButtonHolder = styled.div`
-  display: flex;
-  justify-content: flex-end;
-
-  button {
-    width: 84px;
-    height: 35px;
-    margin: 0 0 0 4px;
-    border-radius: 4.63636px;
-    border: none;
-    background: #52b6ff;
-    color: #ffffff;
-    font-family: "Lexend Deca", sans-serif;
+  p {
+    text-align: left;
+    color: #666666;
+    font-size: 19.976px;
+    line-height: 25px;
+    margin: 0 0 8px;
   }
 `;
+
+const IconHolder = styled.div`
+  position: absolute;
+  top: 11px;
+  right: 10px;
+`

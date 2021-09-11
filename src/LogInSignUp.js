@@ -5,14 +5,18 @@ const Container = styled.main`
   height: 100vh;
   background-color: #ffffff;
   padding: 68px 36px 0;
+
+  a {
+    text-decoration: none;
+  }
 `;
 
 const Logo = styled.img`
   width: 180px;
   height: 178.38px;
-  margin: 0 auto 32.62px;
+  margin: 0 calc((100% - 180px) /2) 32.62px;
 `;
-const Input = styled.input`
+const InputStyle = styled.input`
   width: 303px;
   height: 45px;
   margin: 0 0 6px;
@@ -23,6 +27,10 @@ const Input = styled.input`
   font-size: 19.976px;
   line-height: 25px;
   font-family: "Lexend Deca", sans-serif;
+
+  /* onclick 
+  background: #F2F2F2;
+  color: #AFAFAF; */
 
   &::placeholder {
     color: #dbdbdb;
@@ -37,10 +45,15 @@ const BigButton = styled.button`
   margin: 0 0 25px;
   background-color: #52b6ff;
   color: #ffffff;
+  opacity: 1;
   font-size: 20.976px;
   line-height: 26px;
   text-align: center;
   font-family: "Lexend Deca", sans-serif;
+
+  /* on click
+  opacity: 0.7; */
+
 `;
 
 const Alternate = styled.p`
@@ -51,10 +64,34 @@ const Alternate = styled.p`
   color: #52b6ff;
 `;
 
+const DayHolder = styled.div`
+  display: flex;
+`;
+
+const DayButton = styled.button`
+  width: 30px;
+  height: 30px;
+  border: 1px solid #d5d5d5;
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin-right: 4px;
+  background-color: #ffffff;
+  color: #dbdbdb;
+  font-size: 19.976px;
+  line-height: 25px;
+
+  /* on click 
+  background-color: #CFCFCF;
+  color: #FFFFFF;
+  */
+`;
+
 export {
   Container,
   Logo,
-  Input,
+  InputStyle,
   BigButton,
-  Alternate
+  Alternate,
+  DayHolder,
+  DayButton
 }
