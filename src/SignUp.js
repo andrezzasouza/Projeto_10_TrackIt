@@ -3,7 +3,7 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
 
 import { Container, Logo, InputStyle, BigButton, Alternate } from "./LogInSignUp";
-import { Link } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 
@@ -15,24 +15,39 @@ export default function SignUp() {
   const [createPhoto, setCreatePhoto] = useState("");
   const [enabled, setEnabled] = useState(true);
 
+  const history = useHistory();
+
+  function createUser() {
+    history.push("/");
+    setCreateEmail("");
+    setCreatePassword("");
+    setCreateName("");
+    setCreatePhoto("");
+    setEnabled(true);
+  }
+
+  function creationError () {
+    alert("Algo deu errado. Tente novamente.");
+    setEnabled(true);
+  }
+
   function signingUp (e) {
     e.preventDefault();
     setEnabled(false);
-    
-    const signUpData = {
+
+    const body = {
       email: createEmail,
       name: createName,
       image: createPhoto,
-      password: createPassword,
+      password: createPassword
     };
 
-    console.log(signUpData)
-    // const promise = axios.post(
-    //   "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up",
-    //   signUpData
-    // );
-    // promise.then();
-    // promise.catch();
+    const promise = axios.post(
+      "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up",
+      body
+    );
+    promise.then(createUser);
+    promise.catch(creationError);
     // bloquear campos trocar cor opacidade e colocando pointer-events: none até o axios responder
     //criar um objeto com os dados pra mandar pro servidor
     //chamar o axios
@@ -94,7 +109,7 @@ export default function SignUp() {
            )}
         </BigButton>
       </form>
-      <Link to="/">
+      <Link to={enabled ? "/" : ""}>
         <Alternate>Já tem uma conta? Faça login!</Alternate>
       </Link>
     </Container>
