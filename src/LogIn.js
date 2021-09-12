@@ -27,7 +27,7 @@ export default function LogIn () {
     setEnabled(true);
   }
 
-  function tryagain (response) {
+  function tryAgain () {
     alert("Algo deu errado. Tente novamente.");
     setEnabled(true);
   }
@@ -47,7 +47,7 @@ export default function LogIn () {
     );
     
     promise.then(enter);
-    promise.catch(tryagain);
+    promise.catch(tryAgain);
   }
 
   return (

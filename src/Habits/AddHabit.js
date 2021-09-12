@@ -2,12 +2,14 @@ import styled from "styled-components";
 import { useState, useContext } from "react";
 import UserContext from "../UserContext";
 import axios from "axios";
+// import { useHistory } from "react-router-dom";
 
 import { InputStyle, DayHolder, DayButtonStyle } from "../LogInSignUp";
 
 export default function AddHabit ({show, setShow}) {
 
   const { userData } = useContext(UserContext);
+  // const history = useHistory();
 
   const [task, setTask] = useState("");
   const [enabled, setEnabled] = useState(true);
@@ -16,13 +18,24 @@ export default function AddHabit ({show, setShow}) {
 
   const days = ["D", "S", "T", "Q", "Q", "S", "S"]
 
+  
+
   function selectDay (e, index) {
+
+    function repeated(number) {
+      if (number === index) {
+        return true;
+      }
+    }
+
     console.log("clicked", e);
     console.log("index", index);
     setMarked(!marked);
-    const alreadySelected = selectedDays.find(number => number === index);
-    if (alreadySelected) {
+    const alreadySelected = selectedDays.find(repeated);
+    console.log("aS", alreadySelected);
+    if (alreadySelected !== undefined) {
       const removeSelection = selectedDays.filter((days) => days !== index);
+      console.log("rS", removeSelection);
       setSelectedDays(removeSelection);
     } else {
       setSelectedDays([...selectedDays, index]);
@@ -38,6 +51,7 @@ export default function AddHabit ({show, setShow}) {
   function addedHabit(response) {
     // criar hábito na página prinicipal
     // desmarcar botões
+    console.log("aH", selectedDays)
     setEnabled(true);
     setTask("");
     hideBox();

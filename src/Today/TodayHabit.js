@@ -2,15 +2,43 @@ import { IoCheckmark } from "react-icons/io5";
 import styled from "styled-components";
 import { useState, useContext } from "react";
 import UserContext from "../UserContext";
+import axios from "axios";
 
 export default function TodayHabit( { dailyTask }) {
 
-  const { dailyStats, setDailyStats } = useContext(UserContext);
+  const { userData, dailyStats, setDailyStats } = useContext(UserContext);
   const [taskDone, setTaskDone] = useState(false);
   console.log("daily", dailyTask)
 
+  const config = {
+    headers: {
+      Authorization: `Bearer ${userData.token}`,
+    },
+  };
+
+  function updateChecked (response) {
+    console.log(response);
+  }
+  function markAgain (response) {
+    setTaskDone(!taskDone);
+    console.log(response);
+  }
+
   function checkTask () {
-    setTaskDone(!taskDone)
+    if (taskDone) {
+      setTaskDone(!taskDone);
+      const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${dailyTask.id}/uncheck`, 
+      config)
+      promise.then((response) => console.log(response));
+      promise.catch(markAgain);
+    } else {
+      setTaskDone(!taskDone);
+      const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${dailyTask.id}/check`,
+      config)
+      promise.then(updateChecked);
+      promise.catch(markAgain);
+    }
+    
     // aumentar dias feitos e recorde se igual a dias feitos
     // mandar pro axios
     // se axios der certo, mantém
