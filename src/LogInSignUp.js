@@ -61,17 +61,18 @@ const Alternate = styled.p`
 
 const DayHolder = styled.div`
   display: flex;
+  pointer-events: ${(props) => props.clickable ? 'auto' : 'none'};
 `;
 
-const DayButton = styled.button`
+const DayButtonStyle = styled.button`
   width: 30px;
   height: 30px;
-  border: 1px solid #d5d5d5;
+  border: ${(props) => props.clicked ? '1px solid #CFCFCF;' : '1px solid #d5d5d5'};
   box-sizing: border-box;
   border-radius: 5px;
   margin-right: 4px;
-  background-color: #ffffff;
-  color: #dbdbdb;
+  background-color: ${(props) => props.clicked ? '#CFCFCF' : '#ffffff'};
+  color: ${(props) => props.clicked ? '#ffffff' : '#dbdbdb'};
   font-size: 19.976px;
   line-height: 25px;
 
@@ -88,5 +89,5 @@ export {
   BigButton,
   Alternate,
   DayHolder,
-  DayButton
+  DayButtonStyle
 }

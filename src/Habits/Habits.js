@@ -27,7 +27,7 @@ export default function Habits () {
   };
 
   function loadTasks(response) {
-    response.data.length !== 0 ? setHabitScreen(<CreatedHabit response={response.data} />) : setHabitScreen(<NoHabit />);
+    response.data.length !== 0 ? setHabitScreen(response.data.map(currentTask => <CreatedHabit currentTask={currentTask} />)) : setHabitScreen(<NoHabit />);
     console.log("lT", response);
   }
 

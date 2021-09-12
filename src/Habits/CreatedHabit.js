@@ -1,27 +1,48 @@
 import styled from "styled-components";
 import { IoTrashOutline } from "react-icons/io5";
-import { DayHolder, DayButton } from "../LogInSignUp";
+import { DayHolder, DayButtonStyle } from "../LogInSignUp";
+import axios from "axios";
+import { useContext } from "react";
+import UserContext from "../UserContext";
 
-export default function CreatedHabit ({response}) {
+export default function CreatedHabit ({currentTask}) {
 
-  console.log(response);
+  const { userData } = useContext(UserContext);
+
+  console.log("ct", currentTask);
+  const days = ["D", "S", "T", "Q", "Q", "S", "S"]
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${userData.token}`,
+    },
+  };
   
+  function deleteTask (e) {
+    const deleteHabit = window.confirm("Você realmente quer deletar esse hábito?");
+    if (deleteHabit) {
+      axios.delete(
+        `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${currentTask.id}`,
+        config
+      );
+    }
+  }
+
   return (
     <CreatedHabitStyle>
-      response.map();
-      <p>{response.name}</p>
-      <IconHolder>
+      <p>{currentTask.name}</p>
+      <IconHolder onClick={deleteTask}>
         <IoTrashOutline color={"#666666"} />
       </IconHolder>
-      <DayHolder>
-        <DayButton>D</DayButton>
-        <DayButton>S</DayButton>
-        <DayButton>T</DayButton>
-        <DayButton>Q</DayButton>
-        <DayButton>Q</DayButton>
-        <DayButton>S</DayButton>
-        <DayButton>S</DayButton>
-      </DayHolder>
+      {days.map((day, index) => (
+        <DayButtonStyle
+          clicked={{/*marked*/}}
+          index={index}
+          type="button"
+        >
+          {day}
+        </DayButtonStyle>
+      ))}
     </CreatedHabitStyle>
   );
 }
@@ -29,7 +50,7 @@ export default function CreatedHabit ({response}) {
 const CreatedHabitStyle = styled.div`
   width: 340px;
   border-radius: 5px;
-  padding: 13px 11px 15px 15px;
+  padding: 13px 27px 15px 15px;
   background-color: #ffffff;
   margin: 0 0 10px;
   position: relative;
@@ -40,6 +61,7 @@ const CreatedHabitStyle = styled.div`
     font-size: 19.976px;
     line-height: 25px;
     margin: 0 0 8px;
+    word-break: break-all;
   }
 `;
 

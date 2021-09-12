@@ -3,7 +3,7 @@ import { useState, useContext } from "react";
 import UserContext from "../UserContext";
 import axios from "axios";
 
-import { InputStyle, DayHolder, DayButton } from "../LogInSignUp";
+import { InputStyle, DayHolder, DayButtonStyle } from "../LogInSignUp";
 
 export default function AddHabit ({show, setShow}) {
 
@@ -11,12 +11,24 @@ export default function AddHabit ({show, setShow}) {
 
   const [task, setTask] = useState("");
   const [enabled, setEnabled] = useState(true);
+  const [marked, setMarked] = useState(false);
+  const [selectedDays, setSelectedDays] = useState([]);
 
   const days = ["D", "S", "T", "Q", "Q", "S", "S"]
 
-  function selectDay () {
-    
+  function selectDay (e, index) {
+    console.log("clicked", e);
+    console.log("index", index);
+    setMarked(!marked);
+    const alreadySelected = selectedDays.find(number => number === index);
+    if (alreadySelected) {
+      const removeSelection = selectedDays.filter((days) => days !== index);
+      setSelectedDays(removeSelection);
+    } else {
+      setSelectedDays([...selectedDays, index]);
+    }
   }
+  
 
   function addError() {
     alert("Algo deu errado. Tente novamente.")
@@ -34,7 +46,8 @@ export default function AddHabit ({show, setShow}) {
   function createNewHabit (e) {
     setEnabled(false);
     e.preventDefault();
-    // chamar axios, criar novo item abaixo, esconder caixa com display none(?)
+    // only allow data to be sent when at least one day is selected
+    // botão de adicionar faz o que enquanto o setEnabled tá false? Preciso desativar ele também?
 
     const config = {
       headers: {
@@ -43,17 +56,24 @@ export default function AddHabit ({show, setShow}) {
     };
 
     const body = {
-      name: {task},
-      days: [1, 3, 5], // segunda, quarta e sexta
+      name: task,
+      days: selectedDays,
     };
-    const promise = axios.post(
-      "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
-      body,
-      config
-    );
 
-    promise.then(addedHabit);
-    promise.catch(addError);
+    if (selectedDays.length !== 0) {
+      const promise = axios.post(
+        "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
+        body,
+        config
+      );
+
+      promise.then(addedHabit);
+      promise.catch(addError);
+    } else {
+      alert("Escolha pelo menos 1 dia para realizar o hábito.")
+      setEnabled(true);
+    }
+    
   }
 
   function hideBox () {
@@ -71,15 +91,16 @@ export default function AddHabit ({show, setShow}) {
           onChange={(e) => setTask(e.target.value)}
           required
         />
-        <DayHolder>
+        <DayHolder clickable={enabled}>
           {days.map((day, index) => (
-            <DayButton 
-              index={index} 
-              onClick={selectDay}
+            <DayButtonStyle
+              clicked={marked}
+              index={index}
+              onClick={(e) => selectDay(e, index)}
               type="button"
             >
               {day}
-            </DayButton>
+            </DayButtonStyle>
           ))}
         </DayHolder>
         <ButtonHolder clickable={enabled}>

@@ -23,6 +23,9 @@ export default function FooterMenu() {
               pathColor: "#FFF",
               textColor: "#FFF",
               trailColor: "transparent",
+              fontSize: "17.976px",
+              lineHeigh: "22px",
+              // fix font size using text property
             })}
           />
         </div>
