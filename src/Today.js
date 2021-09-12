@@ -16,7 +16,7 @@ export default function Today () {
   let today = dayjs().locale('pt-br').format('dddd, DD/MM');
   console.log(today);
 
-  const { userData } = useContext(UserContext);
+  const { userData, dailyStats } = useContext(UserContext);
   const [todayScreen, setTodayScreen] = useState("");
   const [habitAmount, setHabitAmount] = useState(
     "Nenhum hábito concluído ainda"
@@ -36,7 +36,7 @@ export default function Today () {
        setTodayScreen(<NoneToday />)
     );
 
-    response.data.length !== 0 ? setHabitAmount(`X% dos hábitos concluídos`) : setHabitAmount(habitAmount);
+    response.data.length !== 0 ? setHabitAmount(`${dailyStats}% dos hábitos concluídos`) : setHabitAmount(habitAmount);
   }
 
   useEffect(() => {

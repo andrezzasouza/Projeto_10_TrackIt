@@ -1,22 +1,37 @@
 import { IoCheckmark } from "react-icons/io5";
 import styled from "styled-components";
+import { useState, useContext } from "react";
+import UserContext from "../UserContext";
 
 export default function TodayHabit( { dailyTask }) {
+
+  const { dailyStats, setDailyStats } = useContext(UserContext);
+  const [taskDone, setTaskDone] = useState(false);
+  console.log("daily", dailyTask)
+
+  function checkTask () {
+    setTaskDone(!taskDone)
+    // aumentar dias feitos e recorde se igual a dias feitos
+    // mandar pro axios
+    // se axios der certo, mantém
+      // calcula quantas tarefas do total foram concluídas e atualiza estado da porcentagem no setDailyStats 
+    // senão, desmarca e reseta os valores
+  }
 
   return (
     <TodayHabitStyle>
       <div>
-        <h3>Ler 1 capítulo de livro</h3>
+        <h3>{dailyTask.name}</h3>
         <div>
           <p>
-            Sequência atual: <span>3 dias</span>
+            Sequência atual: <span>{dailyTask.currentSequence} dias</span>
           </p>
           <p>
-            Seu recorde: <span>5 dias</span>
+            Seu recorde: <span>{dailyTask.highestSequence} dias</span>
           </p>
         </div>
       </div>
-      <button>
+      <CheckButton done={taskDone} onClick={checkTask}>
         <IoCheckmark
           color={"#FFFFFF"}
           title={""}
@@ -24,7 +39,7 @@ export default function TodayHabit( { dailyTask }) {
           stroke={"#FFFFFF"}
           stroke-width="10%"
         />
-      </button>
+      </CheckButton>
     </TodayHabitStyle>
   );
 }
@@ -56,16 +71,12 @@ const TodayHabitStyle = styled.div`
     color: #8FC549;
     */
   }
+`;
 
-  button {
-    width: 69px;
-    height: 69px;
-    border-radius: 5px;
-    background: #ebebeb;
-    border: 1px solid #e7e7e7;
-
-    /* on click
-    background: #8FC549;
-    border: none; */
-  }
+const CheckButton = styled.button`
+  width: 69px;
+  height: 69px;
+  border-radius: 5px;
+  background-color: ${(props) => props.done ? '#8FC549' : '#ebebeb'};
+  border: ${(props) => props.done ? 'none' : '1px solid #e7e7e7'};
 `;

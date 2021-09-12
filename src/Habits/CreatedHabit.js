@@ -10,7 +10,7 @@ export default function CreatedHabit ({currentTask}) {
   const { userData } = useContext(UserContext);
 
   console.log("ct", currentTask);
-  const days = ["D", "S", "T", "Q", "Q", "S", "S"]
+  const days = ["D", "S", "T", "Q", "Q", "S", "S"];
 
   const config = {
     headers: {
@@ -34,15 +34,21 @@ export default function CreatedHabit ({currentTask}) {
       <IconHolder onClick={deleteTask}>
         <IoTrashOutline color={"#666666"} />
       </IconHolder>
-      {days.map((day, index) => (
-        <DayButtonStyle
-          clicked={{/*marked*/}}
-          index={index}
-          type="button"
-        >
-          {day}
-        </DayButtonStyle>
-      ))}
+      <DayHolder>
+        {days.map((day, index) => (
+          <DayButtonStyle
+            clicked={
+              {
+                /*marked*/
+              }
+            }
+            index={index}
+            type="button"
+          >
+            {day}
+          </DayButtonStyle>
+        ))}
+      </DayHolder>
     </CreatedHabitStyle>
   );
 }
