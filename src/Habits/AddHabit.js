@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useState, useContext } from "react";
 import UserContext from "../UserContext";
 import axios from "axios";
+import DayButton from './DayButton'
 // import { useHistory } from "react-router-dom";
 
 import { InputStyle, DayHolder, DayButtonStyle } from "../LogInSignUp";
@@ -11,36 +12,37 @@ export default function AddHabit ({show, setShow}) {
   const { userData } = useContext(UserContext);
   // const history = useHistory();
 
+  const [selectedDays, setSelectedDays] = useState([]);
   const [task, setTask] = useState("");
   const [enabled, setEnabled] = useState(true);
-  const [marked, setMarked] = useState(false);
-  const [selectedDays, setSelectedDays] = useState([]);
+  // const [marked, setMarked] = useState(false);
+  // const [selectedDays, setSelectedDays] = useState([]);
 
   const days = ["D", "S", "T", "Q", "Q", "S", "S"]
 
   
 
-  function selectDay (e, index) {
+  // function selectDay (e, index) {
 
-    function repeated(number) {
-      if (number === index) {
-        return true;
-      }
-    }
+  //   function repeated(number) {
+  //     if (number === index) {
+  //       return true;
+  //     }
+  //   }
 
-    console.log("clicked", e);
-    console.log("index", index);
-    setMarked(!marked);
-    const alreadySelected = selectedDays.find(repeated);
-    console.log("aS", alreadySelected);
-    if (alreadySelected !== undefined) {
-      const removeSelection = selectedDays.filter((days) => days !== index);
-      console.log("rS", removeSelection);
-      setSelectedDays(removeSelection);
-    } else {
-      setSelectedDays([...selectedDays, index]);
-    }
-  }
+  //   console.log("clicked", e);
+  //   console.log("index", index);
+  //   setMarked(!marked);
+  //   const alreadySelected = selectedDays.find(repeated);
+  //   console.log("aS", alreadySelected);
+  //   if (alreadySelected !== undefined) {
+  //     const removeSelection = selectedDays.filter((days) => days !== index);
+  //     console.log("rS", removeSelection);
+  //     setSelectedDays(removeSelection);
+  //   } else {
+  //     setSelectedDays([...selectedDays, index]);
+  //   }
+  // }
   
 
   function addError() {
@@ -106,16 +108,14 @@ export default function AddHabit ({show, setShow}) {
           required
         />
         <DayHolder clickable={enabled}>
-          {days.map((day, index) => (
-            <DayButtonStyle
-              clicked={marked}
-              index={index}
-              onClick={(e) => selectDay(e, index)}
-              type="button"
-            >
-              {day}
-            </DayButtonStyle>
-          ))}
+          {days.map((day, index) =>
+            <DayButton 
+              key={index} 
+              day={day} 
+              index={index} 
+              selectedDays={selectedDays} 
+              setSelectedDays={setSelectedDays} 
+            />)}
         </DayHolder>
         <ButtonHolder clickable={enabled}>
           <button type="button" onClick={hideBox}>
