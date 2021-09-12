@@ -1,12 +1,17 @@
 import styled from 'styled-components';
+import UserContext from "./UserContext";
+import { useState, useContext } from "react";
 
 export default function Header () {
+  const { userData } = useContext(UserContext);
+
+
   return (
     <Heading>
       <h1>TrackIt</h1>
       <img
-        src="https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554_960_720.jpg"
-        alt="Foto do usuário"
+        src={userData.image}
+        alt={`Foto de ${userData.name}`}
       />
     </Heading>
   );

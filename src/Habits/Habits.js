@@ -1,43 +1,72 @@
 import Header from '../Header';
 import FooterMenu from '../FooterMenu';
 import AddHabit from './AddHabit';
+import NoHabit from "./NoHabit";
+import CreatedHabit from './CreatedHabit';
 
+import { IoAddSharp } from "react-icons/io5";
+import UserContext from "../UserContext";
+
+import { useEffect, useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 import styled from 'styled-components';
-import { IoTrashOutline, IoAddSharp } from 'react-icons/io5';
-import { DayButton, DayHolder } from '../LogInSignUp';
 
 export default function Habits () {
+
+  const [ habitScreen, setHabitScreen ] = useState("");
+  const [ show, setShow ] = useState(false);
+
+  const { userData } = useContext(UserContext);
+  const history = useHistory();
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${userData.token}`,
+    },
+  };
+
+  function loadTasks(response) {
+    response.data.length !== 0 ? setHabitScreen(<CreatedHabit response={response.data} />) : setHabitScreen(<NoHabit />);
+    console.log("lT", response);
+  }
+
+  function loadingError() {
+    alert("Algo deu errado. Tente novamente.");
+    history.push("/");
+  }
+  
+  useEffect(() => {
+    const promise = axios.get(
+      "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
+      config
+    );
+
+    promise.then(loadTasks);
+    promise.catch(loadingError);
+
+    // pensar no problema da renderização vazia
+  }, []);
+
+
+  function addBox() {
+    setShow(true);
+  }
+
   return (
     <Contents>
       <Header />
       <MyHabits>
         <h2>Meus hábitos</h2>
-        <button>
+        <button onClick={addBox}>
           <IoAddSharp color={"#FFFFFF"} title={""} font-size="25px" />
         </button>
       </MyHabits>
-      <AddHabit />
-      <CreatedHabits>
-        <p>Ler 1 capítulo de livro</p>
-        <IconHolder>
-          <IoTrashOutline color={"#666666"} />
-        </IconHolder>
-        <DayHolder>
-          <DayButton>D</DayButton>
-          <DayButton>S</DayButton>
-          <DayButton>T</DayButton>
-          <DayButton>Q</DayButton>
-          <DayButton>Q</DayButton>
-          <DayButton>S</DayButton>
-          <DayButton>S</DayButton>
-        </DayHolder>
-      </CreatedHabits>
-      <NoHabits>
-        <p>
-          Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
-          começar a trackear!
-        </p>
-      </NoHabits>
+      <AddHabit
+        show={show}
+        setShow={setShow}
+      />
+      {habitScreen}
       <FooterMenu />
     </Contents>
   );
@@ -76,33 +105,5 @@ const MyHabits = styled.div`
   }
 `;
 
-const NoHabits = styled.div`
-  width: 338px;
-  font-size: 17.976px;
-  line-height: 22px;
-  text-align: left;
-  color: #666666;
-`;
 
-const CreatedHabits = styled.div`
-  width: 340px;
-  border-radius: 5px;
-  padding: 13px 11px 15px 15px;
-  background-color: #ffffff;
-  margin: 0 0 10px;
-  position: relative;
 
-  p {
-    text-align: left;
-    color: #666666;
-    font-size: 19.976px;
-    line-height: 25px;
-    margin: 0 0 8px;
-  }
-`;
-
-const IconHolder = styled.div`
-  position: absolute;
-  top: 11px;
-  right: 10px;
-`

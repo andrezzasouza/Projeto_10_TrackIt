@@ -13,7 +13,6 @@ export default function LogIn () {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [enabled, setEnabled] = useState(true);
-  // const [token, setToken] = useState("");
 
   const { setUserData } = useContext(UserContext);
 
@@ -21,6 +20,7 @@ export default function LogIn () {
 
   function enter (response) {
     setUserData(response.data)
+    console.log(response)
     history.push("/hoje");
     setEmail("");
     setPassword("");

@@ -11,8 +11,9 @@ import { useState } from 'react';
 function App() {
 
   const [userData, setUserData] = useState("");
+  const [dailyStats, setDailyStats] = useState(0);
   return (
-    <UserContext.Provider value={{userData, setUserData}}>
+    <UserContext.Provider value={{userData, setUserData, dailyStats, setDailyStats}}>
       <BrowserRouter>
         <Switch>
           <Route path="/" exact>

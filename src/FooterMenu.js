@@ -2,8 +2,13 @@ import { Link } from 'react-router-dom';
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import styled from "styled-components";
+import UserContext from "./UserContext";
+import { useContext } from "react";
 
 export default function FooterMenu() {
+
+  const { dailyStats } = useContext(UserContext);
+
   return (
     <Footer>
       <Link to="/habitos">
@@ -12,7 +17,7 @@ export default function FooterMenu() {
       <Link to="/hoje">
         <div>
           <CircularProgressbar
-            // value={percentage}
+            value={dailyStats}
             text={`Hoje`}
             styles={buildStyles({
               pathColor: "#FFF",
