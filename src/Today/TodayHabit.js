@@ -7,35 +7,54 @@ import axios from "axios";
 export default function TodayHabit( { dailyTask }) {
 
   const { userData, dailyStats, setDailyStats } = useContext(UserContext);
-  const [taskDone, setTaskDone] = useState(false);
+  const [taskDone, setTaskDone] = useState(dailyTask.done);
+  const [current, setCurrent] = useState(dailyTask.currentSequence);
+  const [highest, setHighest] = useState(dailyTask.highestSequence)
+  const [record, setRecord] = useState(current === highest && highest !== 0);
   console.log("daily", dailyTask)
+  console.log("uD", userData);
 
-  const config = {
-    headers: {
-      Authorization: `Bearer ${userData.token}`,
-    },
-  };
+  function removeChecked (response) {
+    setCurrent(current - 1);
+    setHighest(highest - 1);
+    if (highest === 1) {
+      setRecord(false);
+    }
+  }
 
-  function updateChecked (response) {
-    console.log(response);
+  function addChecked (response) {
+    setCurrent(current + 1);
+    setHighest(highest + 1);
+    if (current === highest) {
+      setRecord(true);
+    }
   }
   function markAgain (response) {
-    setTaskDone(!taskDone);
-    console.log(response);
+    // ver como alterar a seleção só daquele checked
   }
 
   function checkTask () {
-    if (taskDone) {
+    if (dailyTask.done) {
       setTaskDone(!taskDone);
-      const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${dailyTask.id}/uncheck`, 
-      config)
-      promise.then((response) => console.log(response));
+      const promise = axios({
+        method: "post",
+        url: `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${dailyTask.id}/uncheck`,
+        headers: {
+          Authorization: `Bearer ${userData.token}`,
+        },
+      });
+      promise.then(removeChecked);
       promise.catch(markAgain);
     } else {
       setTaskDone(!taskDone);
-      const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${dailyTask.id}/check`,
-      config)
-      promise.then(updateChecked);
+      const promise = axios({
+        method: "post",
+        url: `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${dailyTask.id}/check`,
+        headers: {
+          Authorization: `Bearer ${userData.token}`,
+        },
+      });
+      promise.then(addChecked);
       promise.catch(markAgain);
     }
     
@@ -52,10 +71,14 @@ export default function TodayHabit( { dailyTask }) {
         <h3>{dailyTask.name}</h3>
         <div>
           <p>
-            Sequência atual: <span>{dailyTask.currentSequence} dias</span>
+            Sequência atual:{" "}
+            <CurrentStyle done={taskDone}>
+              {current} dias
+            </CurrentStyle>
           </p>
           <p>
-            Seu recorde: <span>{dailyTask.highestSequence} dias</span>
+            Seu recorde:{" "}
+            <HighestStyle record={record}>{highest} dias</HighestStyle>
           </p>
         </div>
       </div>
@@ -92,13 +115,14 @@ const TodayHabitStyle = styled.div`
     font-size: 12.976px;
     line-height: 16px;
   }
+`;
 
-  span {
-    color: #666666;
-    /* onclick
-    color: #8FC549;
-    */
-  }
+const CurrentStyle = styled.span`
+  color: ${(props) => (props.done ? "#8FC549" : "#666666")};
+`;
+
+const HighestStyle = styled.span`
+  color: ${(props) => (props.record ? "#8FC549" : "#666666")};
 `;
 
 const CheckButton = styled.button`
