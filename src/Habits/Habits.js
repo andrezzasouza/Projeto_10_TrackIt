@@ -7,6 +7,7 @@ import CreatedHabit from './CreatedHabit';
 import { IoAddSharp } from "react-icons/io5";
 import UserContext from "../UserContext";
 
+
 import { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
@@ -19,6 +20,7 @@ export default function Habits () {
   // const [ currentState, setCurrentState] = useState
 
   const { userData } = useContext(UserContext);
+  
   const history = useHistory();
 
   const config = {

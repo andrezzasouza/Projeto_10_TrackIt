@@ -7,13 +7,17 @@ import History from './History';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import UserContext from './UserContext';
 import { useState } from 'react';
+import SelectionContext from './SelectionContext';
 
 function App() {
 
   const [userData, setUserData] = useState("");
   const [dailyStats, setDailyStats] = useState(0);
+  const [marked, setMarked] = useState(false);
   return (
-    <UserContext.Provider value={{userData, setUserData, dailyStats, setDailyStats}}>
+    <UserContext.Provider
+      value={{ userData, setUserData, dailyStats, setDailyStats }}
+    >
       <BrowserRouter>
         <Switch>
           <Route path="/" exact>
@@ -22,9 +26,13 @@ function App() {
           <Route path="/cadastro" exact>
             <SignUp />
           </Route>
+
           <Route path="/habitos" exact>
-            <Habits />
+            <SelectionContext.Provider value={{ marked, setMarked }}>
+              <Habits />
+            </SelectionContext.Provider>
           </Route>
+
           <Route path="/hoje">
             <Today />
           </Route>

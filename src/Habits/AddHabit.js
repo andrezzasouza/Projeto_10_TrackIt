@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useState, useContext } from "react";
 import UserContext from "../UserContext";
+import SelectionContext from "../SelectionContext";
 import axios from "axios";
 import DayButton from './DayButton'
 // import { useHistory } from "react-router-dom";
@@ -10,8 +11,10 @@ import { InputStyle, DayHolder } from "../LogInSignUp";
 export default function AddHabit ({ show, setShow, habitCallToServer }) {
 
   const { userData } = useContext(UserContext);
+  // const { marked, setMarked } = useContext(SelectionContext);
   // const history = useHistory();
 
+  const [clear, setClear] = useState()
   const [selectedDays, setSelectedDays] = useState([]);
   const [task, setTask] = useState("");
   const [enabled, setEnabled] = useState(true);
@@ -56,12 +59,13 @@ export default function AddHabit ({ show, setShow, habitCallToServer }) {
     setTask("");
     hideBox();
     habitCallToServer();
+    
+    // setDayTask(false);
   }
 
   function createNewHabit (e) {
     setEnabled(false);
     e.preventDefault();
-    // only allow data to be sent when at least one day is selected
     // botão de adicionar faz o que enquanto o setEnabled tá false? Preciso desativar ele também?
 
     const config = {
@@ -114,6 +118,7 @@ export default function AddHabit ({ show, setShow, habitCallToServer }) {
               index={index} 
               selectedDays={selectedDays} 
               setSelectedDays={setSelectedDays} 
+              clear={clear}
             />)}
         </DayHolder>
         <ButtonHolder clickable={enabled}>

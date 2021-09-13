@@ -75,11 +75,6 @@ const DayButtonStyle = styled.button`
   color: ${(props) => props.clicked ? '#ffffff' : '#dbdbdb'};
   font-size: 19.976px;
   line-height: 25px;
-
-  /* on click 
-  background-color: #CFCFCF;
-  color: #FFFFFF;
-  */
 `;
 
 export {

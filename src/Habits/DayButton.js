@@ -1,10 +1,12 @@
 // import styled from "styled-components";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { DayButtonStyle } from "../LogInSignUp";
+import SelectionContext from "../SelectionContext";
 
-export default function DayButton ({ index, day, selectedDays, setSelectedDays, }) {
+export default function DayButton ({ index, day, selectedDays, setSelectedDays, setClear }) {
   
   const [marked, setMarked] = useState(false);
+  // const { marked, setMarked } = useContext(SelectionContext);
 
   function selectDay(e, index) {
     function repeated(number) {
