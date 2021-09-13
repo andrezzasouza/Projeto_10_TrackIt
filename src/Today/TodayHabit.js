@@ -58,12 +58,6 @@ export default function TodayHabit( { dailyTask, todayCallToServer }) {
       promise.then(addChecked);
       promise.catch(markAgain);
     }
-    
-    // aumentar dias feitos e recorde se igual a dias feitos
-    // mandar pro axios
-    // se axios der certo, mantém
-      // calcula quantas tarefas do total foram concluídas e atualiza estado da porcentagem no setDailyStats 
-    // senão, desmarca e reseta os valores
   }
 
   return (

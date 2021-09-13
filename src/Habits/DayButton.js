@@ -6,7 +6,6 @@ import SelectionContext from "../SelectionContext";
 export default function DayButton ({ index, day, selectedDays, setSelectedDays, setClear }) {
   
   const [marked, setMarked] = useState(false);
-  // const { marked, setMarked } = useContext(SelectionContext);
 
   function selectDay(e, index) {
     function repeated(number) {

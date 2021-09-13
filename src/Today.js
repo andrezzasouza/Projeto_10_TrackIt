@@ -17,6 +17,7 @@ export default function Today () {
   console.log(today);
 
   const { userData, dailyStats, setDailyStats } = useContext(UserContext);
+  const [subtitle, setSubtitle] = useState(false)
   const [todayScreen, setTodayScreen] = useState("");
   const [habitAmount, setHabitAmount] = useState(
     "Nenhum hábito concluído ainda"
@@ -42,9 +43,9 @@ export default function Today () {
 
     setDailyStats(amountDone * 100 / totalTasks)
 
-    response.data.length !== 0
-      ? setHabitAmount(`${parseInt(dailyStats)}% dos hábitos concluídos`)
-      : setHabitAmount(habitAmount);
+    setSubtitle(response.data.length !== 0);
+      // response.data.length !== 0 ? setHabitAmount(`${parseInt(dailyStats)}% dos hábitos concluídos`)
+      // : setHabitAmount(habitAmount);
   
   }
 
@@ -67,7 +68,11 @@ export default function Today () {
       <Header />
       <ThisDate>
         <h2>{today}</h2>
-        <p>{habitAmount}</p>
+        <Subtitle done={subtitle}>
+          {subtitle
+            ? `${parseInt(dailyStats)}% dos hábitos concluídos`
+            : "Nenhum hábito concluído ainda"}
+        </Subtitle>
       </ThisDate>
       {todayScreen}
       <FooterMenu />
@@ -87,13 +92,11 @@ const ThisDate = styled.div`
     line-height: 29px;
     color: #126ba5;
   }
+`;
 
-  p {
+const Subtitle = styled.p`
     font-size: 17.976px;
     line-height: 22px;
 
-    color: #bababa;
-    /* on click
-    color: #8FC549; */
-  }
+    color: ${props => props.done ? '#8FC549' : '#bababa'};
 `;
