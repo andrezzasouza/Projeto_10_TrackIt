@@ -9,7 +9,7 @@ export default function HabitDay({ day, currentTaskDays, index }) {
   const [dayTask, setDayTask] = useState(false);
   useEffect(() => {
     currentTaskDays.find((daySelection) =>
-      daySelection === index ? setDayTask(true) : setDayTask(false)
+      daySelection === index ? setDayTask(true) : dayTask
     );
   }, [])
   
