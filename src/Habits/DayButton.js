@@ -1,11 +1,11 @@
 // import styled from "styled-components";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { DayButtonStyle } from "../LogInSignUp";
 import SelectionContext from "../SelectionContext";
 
 export default function DayButton ({ index, day, selectedDays, setSelectedDays, setClear }) {
   
-  const [marked, setMarked] = useState(false);
+  const [marked, setMarked] = useState(false);  
 
   function selectDay(e, index) {
     function repeated(number) {
@@ -30,7 +30,7 @@ export default function DayButton ({ index, day, selectedDays, setSelectedDays, 
 
   return (
     <DayButtonStyle
-      clicked={marked}
+      clicked={selectedDays.length === 0 && marked ? setMarked(false) : marked}
       index={index}
       onClick={(e) => selectDay(e, index)}
       type="button"

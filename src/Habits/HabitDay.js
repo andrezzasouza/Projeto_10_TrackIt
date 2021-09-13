@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 export default function HabitDay({ day, currentTaskDays, index }) {
 
   const [dayTask, setDayTask] = useState(false);
-  console.log("ctd", currentTaskDays);
-  console.log("i", index);
+  // console.log("ctd", currentTaskDays);
+  // console.log("i", index);
 
   // const [dayTask, setDayTask] = useState(false);
 

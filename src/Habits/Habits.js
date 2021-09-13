@@ -15,6 +15,7 @@ import styled from 'styled-components';
 
 export default function Habits () {
 
+  const [selectedDays, setSelectedDays] = useState([]);
   const [ habitScreen, setHabitScreen ] = useState("");
   const [ show, setShow ] = useState(false);
   // const [ currentState, setCurrentState] = useState
@@ -48,14 +49,15 @@ export default function Habits () {
   useEffect(() => {
     habitCallToServer();
     // pensar no problema da renderização vazia
-  }, []);
+  }, [selectedDays]);
 
 
   function addBox() {
     setShow(true);
+    console.log("selectedDays", selectedDays)
   }
 
-    function loadTasks(response) {
+  function loadTasks(response) {
     response.data.length !== 0 ? setHabitScreen(response.data.map((currentTask, index) => <CreatedHabit currentTask={currentTask} habitCallToServer={habitCallToServer} key={index} />)) : setHabitScreen(<NoHabit />);
     console.log("lT", response);
   }
@@ -73,6 +75,8 @@ export default function Habits () {
         show={show}
         setShow={setShow}
         habitCallToServer={habitCallToServer}
+        selectedDays={selectedDays}
+        setSelectedDays={setSelectedDays}
       />
       {habitScreen}
       <FooterMenu />

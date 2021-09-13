@@ -8,43 +8,18 @@ import DayButton from './DayButton'
 
 import { InputStyle, DayHolder } from "../LogInSignUp";
 
-export default function AddHabit ({ show, setShow, habitCallToServer }) {
+export default function AddHabit ({ show, setShow, habitCallToServer, selectedDays, setSelectedDays }) {
 
   const { userData } = useContext(UserContext);
   // const { marked, setMarked } = useContext(SelectionContext);
   // const history = useHistory();
 
   const [clear, setClear] = useState()
-  const [selectedDays, setSelectedDays] = useState([]);
+  // const [selectedDays, setSelectedDays] = useState([]);
   const [task, setTask] = useState("");
   const [enabled, setEnabled] = useState(true);
 
   const days = ["D", "S", "T", "Q", "Q", "S", "S"]
-
-  
-
-  // function selectDay (e, index) {
-
-  //   function repeated(number) {
-  //     if (number === index) {
-  //       return true;
-  //     }
-  //   }
-
-  //   console.log("clicked", e);
-  //   console.log("index", index);
-  //   setMarked(!marked);
-  //   const alreadySelected = selectedDays.find(repeated);
-  //   console.log("aS", alreadySelected);
-  //   if (alreadySelected !== undefined) {
-  //     const removeSelection = selectedDays.filter((days) => days !== index);
-  //     console.log("rS", removeSelection);
-  //     setSelectedDays(removeSelection);
-  //   } else {
-  //     setSelectedDays([...selectedDays, index]);
-  //   }
-  // }
-  
 
   function addError() {
     alert("Algo deu errado. Tente novamente.")
@@ -56,9 +31,10 @@ export default function AddHabit ({ show, setShow, habitCallToServer }) {
     // desmarcar botões
     console.log("aH", selectedDays)
     setEnabled(true);
+    setSelectedDays([])
     setTask("");
     hideBox();
-    habitCallToServer();
+    habitCallToServer(selectedDays);
     
     // setDayTask(false);
   }
