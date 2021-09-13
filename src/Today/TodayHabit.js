@@ -1,13 +1,11 @@
 import { IoCheckmark } from "react-icons/io5";
 import styled from "styled-components";
 import { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
 import UserContext from "../UserContext";
 import axios from "axios";
 
 export default function TodayHabit( { dailyTask, todayCallToServer }) {
 
-  const history = useHistory();
   const { userData, dailyStats, setDailyStats } = useContext(UserContext);
   const [taskDone, setTaskDone] = useState(dailyTask.done);
   const [current, setCurrent] = useState(dailyTask.currentSequence);

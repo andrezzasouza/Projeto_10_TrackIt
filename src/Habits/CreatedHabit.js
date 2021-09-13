@@ -4,6 +4,7 @@ import { DayHolder, DayButtonStyle } from "../LogInSignUp";
 import axios from "axios";
 import { useContext } from "react";
 import UserContext from "../UserContext";
+import HabitDay from "./HabitDay";
 
 export default function CreatedHabit ({ currentTask, habitCallToServer }) {
 
@@ -37,20 +38,8 @@ export default function CreatedHabit ({ currentTask, habitCallToServer }) {
         <IoTrashOutline color={"#666666"} />
       </IconHolder>
       <DayHolder>
-        {days.map((day, index) => (
-          <DayButtonStyle
-            clicked={
-              {
-                /*marked*/
-              }
-            }
-            key={index}
-            index={index}
-            type="button"
-          >
-            {day}
-          </DayButtonStyle>
-        ))}
+        {days.map((day, index) => <HabitDay day={day} key={index} index={index} currentTaskDays={currentTask.days} />
+        )}
       </DayHolder>
     </CreatedHabitStyle>
   );

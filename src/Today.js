@@ -16,7 +16,7 @@ export default function Today () {
   let today = dayjs().locale('pt-br').format('dddd, DD/MM');
   console.log(today);
 
-  const { userData, dailyStats } = useContext(UserContext);
+  const { userData, dailyStats, setDailyStats } = useContext(UserContext);
   const [todayScreen, setTodayScreen] = useState("");
   const [habitAmount, setHabitAmount] = useState(
     "Nenhum hábito concluído ainda"
@@ -33,10 +33,19 @@ export default function Today () {
     response.data.length !== 0 ? (
       setTodayScreen(response.data.map((dailyTask, index) => <TodayHabit dailyTask={dailyTask} key={index} todayCallToServer={todayCallToServer} />))
      ) : (
-       setTodayScreen(<NoneToday />)
+      setTodayScreen(<NoneToday />)
     );
+    // converter ternário para if
 
-    response.data.length !== 0 ? setHabitAmount(`${dailyStats}% dos hábitos concluídos`) : setHabitAmount(habitAmount);
+    const totalTasks = response.data.length
+    const amountDone = response.data.filter(amount => amount.done).length;
+
+    setDailyStats(amountDone * 100 / totalTasks)
+
+    response.data.length !== 0
+      ? setHabitAmount(`${dailyStats}% dos hábitos concluídos`)
+      : setHabitAmount(habitAmount);
+  
   }
 
   function todayCallToServer () {
