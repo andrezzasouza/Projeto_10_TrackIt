@@ -1,14 +1,12 @@
-import './App.css';
 import LogIn from './LogIn';
 import SignUp from './SignUp';
 import Habits from './Habits/Habits';
 import Today from './Today/Today';
 import History from './History';
+
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import UserContext from './UserContext';
 import { useState } from 'react';
-import TodayContext from './TodayContext';
-import axios from 'axios';
+import UserContext from "./UserContext";
 
 function App() {
 
@@ -30,7 +28,7 @@ function App() {
           <Route path="/habitos" exact>
             <Habits />
           </Route>
-          <Route path="/hoje">
+          <Route path="/hoje" exact>
             <Today />
           </Route>
           <Route path="/historico" exact>

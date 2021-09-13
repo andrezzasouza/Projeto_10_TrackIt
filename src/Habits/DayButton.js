@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState } from "react";
 import { DayButtonStyle } from "../shared/LogInSignUp";
 
 export default function DayButton ({ index, day, selectedDays, setSelectedDays }) {

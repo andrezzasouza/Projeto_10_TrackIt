@@ -26,7 +26,6 @@ export default function SignUp() {
   }
 
   function creationError (response) {
-    console.log("res", response)
     alert("Algo deu errado. Tente novamente.");
     setEnabled(true);
   }
@@ -46,7 +45,6 @@ export default function SignUp() {
       body
     );
 
-    console.log(body);
     promise.then(createUser);
     promise.catch(creationError);
   }

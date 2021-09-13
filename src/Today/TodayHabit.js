@@ -82,9 +82,8 @@ export default function TodayHabit( { dailyTask, todayCallToServer }) {
         <IoCheckmark
           color={"#FFFFFF"}
           title={""}
-          font-size="56px"
+          fontSize="56px"
           stroke={"#FFFFFF"}
-          stroke-width="10%"
         />
       </CheckButton>
     </TodayHabitStyle>
