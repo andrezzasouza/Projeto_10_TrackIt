@@ -31,7 +31,7 @@ export default function Today () {
   function loadToday(response) {
     console.log("resp", response)
     response.data.length !== 0 ? (
-      setTodayScreen(response.data.map(dailyTask => <TodayHabit dailyTask={dailyTask} />))
+      setTodayScreen(response.data.map((dailyTask, index) => <TodayHabit dailyTask={dailyTask} key={index} todayCallToServer={todayCallToServer} />))
      ) : (
        setTodayScreen(<NoneToday />)
     );
@@ -39,7 +39,7 @@ export default function Today () {
     response.data.length !== 0 ? setHabitAmount(`${dailyStats}% dos hábitos concluídos`) : setHabitAmount(habitAmount);
   }
 
-  useEffect(() => {
+  function todayCallToServer () {
     const promise = axios.get(
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today",
       config
@@ -47,6 +47,10 @@ export default function Today () {
 
     promise.then(loadToday);
     promise.catch();
+  }
+
+  useEffect(() => {
+    todayCallToServer();
   }, []);
 
   return (

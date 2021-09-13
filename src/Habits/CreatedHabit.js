@@ -5,7 +5,7 @@ import axios from "axios";
 import { useContext } from "react";
 import UserContext from "../UserContext";
 
-export default function CreatedHabit ({ currentTask, callToServer }) {
+export default function CreatedHabit ({ currentTask, habitCallToServer }) {
 
   const { userData } = useContext(UserContext);
 
@@ -25,7 +25,7 @@ export default function CreatedHabit ({ currentTask, callToServer }) {
         `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${currentTask.id}`,
         config
       );
-      promise.then(() => callToServer());
+      promise.then(() => habitCallToServer());
       promise.catch(() => "Algo deu errado. Tente novamente.")
     }
   }
@@ -44,6 +44,7 @@ export default function CreatedHabit ({ currentTask, callToServer }) {
                 /*marked*/
               }
             }
+            key={index}
             index={index}
             type="button"
           >

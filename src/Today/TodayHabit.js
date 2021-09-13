@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import UserContext from "../UserContext";
 import axios from "axios";
 
-export default function TodayHabit( { dailyTask }) {
+export default function TodayHabit( { dailyTask, todayCallToServer }) {
 
   const history = useHistory();
   const { userData, dailyStats, setDailyStats } = useContext(UserContext);
@@ -16,23 +16,26 @@ export default function TodayHabit( { dailyTask }) {
   console.log("daily", dailyTask)
   console.log("uD", userData);
 
-  function removeChecked (response) {
+  function removeChecked () {
     setCurrent(current - 1);
     setHighest(highest - 1);
     if (highest === 1) {
       setRecord(false);
     }
+    todayCallToServer();
   }
 
-  function addChecked (response) {
+  function addChecked () {
     setCurrent(current + 1);
     setHighest(highest + 1);
     if (current === highest) {
       setRecord(true);
     }
+    todayCallToServer();
   }
-  function markAgain (response) {
-    // ver como alterar a seleção só daquele checked
+  function markAgain () {
+    setTaskDone(!!taskDone);
+    todayCallToServer();
   }
 
   function checkTask () {

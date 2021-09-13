@@ -7,7 +7,7 @@ import DayButton from './DayButton'
 
 import { InputStyle, DayHolder } from "../LogInSignUp";
 
-export default function AddHabit ({ show, setShow, callToServer }) {
+export default function AddHabit ({ show, setShow, habitCallToServer }) {
 
   const { userData } = useContext(UserContext);
   // const history = useHistory();
@@ -55,7 +55,7 @@ export default function AddHabit ({ show, setShow, callToServer }) {
     setEnabled(true);
     setTask("");
     hideBox();
-    callToServer();
+    habitCallToServer();
   }
 
   function createNewHabit (e) {
