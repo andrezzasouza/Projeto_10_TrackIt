@@ -43,7 +43,7 @@ export default function Today () {
     setDailyStats(amountDone * 100 / totalTasks)
 
     response.data.length !== 0
-      ? setHabitAmount(`${dailyStats}% dos hábitos concluídos`)
+      ? setHabitAmount(`${parseInt(dailyStats)}% dos hábitos concluídos`)
       : setHabitAmount(habitAmount);
   
   }

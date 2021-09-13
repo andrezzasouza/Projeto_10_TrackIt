@@ -1,5 +1,5 @@
 import { DayButtonStyle } from "../LogInSignUp";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function HabitDay({ day, currentTaskDays, index }) {
 
@@ -7,10 +7,17 @@ export default function HabitDay({ day, currentTaskDays, index }) {
   console.log("i", index);
 
   const [dayTask, setDayTask] = useState(false);
-
-  function selection () {
-    currentTaskDays.find((daySelection) => daySelection === index ? setDayTask(true) : setDayTask(false));
-  }
+  useEffect(() => {
+    currentTaskDays.find((daySelection) =>
+      daySelection === index ? setDayTask(true) : setDayTask(false)
+    );
+  }, [])
+  
+  // function selection () {
+  //   currentTaskDays.find((daySelection) =>
+  //     daySelection === index ? setDayTask(true) : setDayTask(false)
+  //   );
+  // }
 
   return (
     <DayButtonStyle

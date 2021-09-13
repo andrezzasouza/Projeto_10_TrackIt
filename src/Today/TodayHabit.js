@@ -10,16 +10,14 @@ export default function TodayHabit( { dailyTask, todayCallToServer }) {
   const [taskDone, setTaskDone] = useState(dailyTask.done);
   const [current, setCurrent] = useState(dailyTask.currentSequence);
   const [highest, setHighest] = useState(dailyTask.highestSequence)
-  const [record, setRecord] = useState(current === highest && highest !== 0);
+  const [record, setRecord] = useState(current === highest && highest !== 0 && dailyTask.done === true);
   console.log("daily", dailyTask)
   console.log("uD", userData);
 
   function removeChecked () {
     setCurrent(current - 1);
     setHighest(highest - 1);
-    if (highest === 1) {
-      setRecord(false);
-    }
+    setRecord(false);
     todayCallToServer();
   }
 
@@ -112,6 +110,7 @@ const TodayHabitStyle = styled.div`
     font-size: 19.976px;
     line-height: 25px;
     margin: 0 0 7px;
+    word-break: break-all;
   }
 
   p {

@@ -16,6 +16,7 @@ export default function Habits () {
 
   const [ habitScreen, setHabitScreen ] = useState("");
   const [ show, setShow ] = useState(false);
+  // const [ currentState, setCurrentState] = useState
 
   const { userData } = useContext(UserContext);
   const history = useHistory();
