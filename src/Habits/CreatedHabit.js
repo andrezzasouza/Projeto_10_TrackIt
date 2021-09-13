@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { IoTrashOutline } from "react-icons/io5";
-import { DayHolder, DayButtonStyle } from "../LogInSignUp";
+import { DayHolder } from "../shared/LogInSignUp";
 import axios from "axios";
 import { useContext } from "react";
 import UserContext from "../UserContext";
@@ -8,9 +8,7 @@ import HabitDay from "./HabitDay";
 
 export default function CreatedHabit ({ currentTask, habitCallToServer }) {
 
-  const { userData } = useContext(UserContext);
-
-  console.log("ct", currentTask);
+  const { userData, setDailyStats } = useContext(UserContext);
   const days = ["D", "S", "T", "Q", "Q", "S", "S"];
 
   const config = {
@@ -18,7 +16,28 @@ export default function CreatedHabit ({ currentTask, habitCallToServer }) {
       Authorization: `Bearer ${userData.token}`,
     },
   };
+
+    function reloadPercentage (response) {
+    const totalTasks = response.data.length;
+    const amountDone = response.data.filter((amount) => amount.done).length;
+
+    setDailyStats((amountDone * 100) / totalTasks);
+  }
+
+  function updatePercentage () {
+    const promise = axios.get(
+      "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today",
+      config
+    );
+
+    promise.then(reloadPercentage)
+  }
   
+  function createSuccess () {
+    habitCallToServer();
+    updatePercentage();
+  }
+
   function deleteTask (e) {
     const deleteHabit = window.confirm("Você realmente quer deletar esse hábito?");
     if (deleteHabit) {
@@ -26,7 +45,7 @@ export default function CreatedHabit ({ currentTask, habitCallToServer }) {
         `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${currentTask.id}`,
         config
       );
-      promise.then(() => habitCallToServer());
+      promise.then(createSuccess);
       promise.catch(() => "Algo deu errado. Tente novamente.")
     }
   }

@@ -1,18 +1,17 @@
 import { IoCheckmark } from "react-icons/io5";
 import styled from "styled-components";
+import axios from "axios";
+
 import { useState, useContext } from "react";
 import UserContext from "../UserContext";
-import axios from "axios";
 
 export default function TodayHabit( { dailyTask, todayCallToServer }) {
 
-  const { userData, dailyStats, setDailyStats } = useContext(UserContext);
+  const { userData } = useContext(UserContext);
   const [taskDone, setTaskDone] = useState(dailyTask.done);
   const [current, setCurrent] = useState(dailyTask.currentSequence);
-  const [highest, setHighest] = useState(dailyTask.highestSequence)
+  const [highest, setHighest] = useState(dailyTask.highestSequence);
   const [record, setRecord] = useState(current === highest && highest !== 0 && dailyTask.done === true);
-  console.log("daily", dailyTask)
-  console.log("uD", userData);
 
   function removeChecked () {
     setCurrent(current - 1);
@@ -73,7 +72,9 @@ export default function TodayHabit( { dailyTask, todayCallToServer }) {
           </p>
           <p>
             Seu recorde:{" "}
-            <HighestStyle record={record}>{highest} dias</HighestStyle>
+            <HighestStyle record={record}>
+              {highest} dias
+            </HighestStyle>
           </p>
         </div>
       </div>

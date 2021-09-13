@@ -1,8 +1,7 @@
-// import styled from "styled-components";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
 
-import { Container, Logo, InputStyle, BigButton, Alternate } from "./LogInSignUp";
+import { Container, Logo, InputStyle, BigButton, Alternate } from "./shared/LogInSignUp";
 import { useHistory, Link } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
@@ -26,7 +25,8 @@ export default function SignUp() {
     setEnabled(true);
   }
 
-  function creationError () {
+  function creationError (response) {
+    console.log("res", response)
     alert("Algo deu errado. Tente novamente.");
     setEnabled(true);
   }
@@ -41,19 +41,14 @@ export default function SignUp() {
       image: createPhoto,
       password: createPassword
     };
-
     const promise = axios.post(
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up",
       body
     );
+
+    console.log(body);
     promise.then(createUser);
     promise.catch(creationError);
-    // bloquear campos trocar cor opacidade e colocando pointer-events: none até o axios responder
-    //criar um objeto com os dados pra mandar pro servidor
-    //chamar o axios
-    // se der certo, redirecionar pra tela de login com useHistory
-    // ver comportamento esperado pro erro
-    //limpa os campos em algum caso?
   }
 
   return (
@@ -104,7 +99,6 @@ export default function SignUp() {
               color="#FFFFFF"
               height={45}
               width={51}
-              // timeout={3000}
             />
            )}
         </BigButton>

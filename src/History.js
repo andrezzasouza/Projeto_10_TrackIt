@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-import Header from "./Header";
-import FooterMenu from "./FooterMenu";
+import Header from "./shared/Header";
+import FooterMenu from "./shared/FooterMenu";
 
 export default function History () {
   return (

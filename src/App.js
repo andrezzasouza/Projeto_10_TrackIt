@@ -2,18 +2,19 @@ import './App.css';
 import LogIn from './LogIn';
 import SignUp from './SignUp';
 import Habits from './Habits/Habits';
-import Today from './Today';
+import Today from './Today/Today';
 import History from './History';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import UserContext from './UserContext';
 import { useState } from 'react';
-import SelectionContext from './SelectionContext';
+import TodayContext from './TodayContext';
+import axios from 'axios';
 
 function App() {
 
   const [userData, setUserData] = useState("");
   const [dailyStats, setDailyStats] = useState(0);
-  const [marked, setMarked] = useState(false);
+
   return (
     <UserContext.Provider
       value={{ userData, setUserData, dailyStats, setDailyStats }}
@@ -26,13 +27,9 @@ function App() {
           <Route path="/cadastro" exact>
             <SignUp />
           </Route>
-
           <Route path="/habitos" exact>
-            <SelectionContext.Provider value={{ marked, setMarked }}>
-              <Habits />
-            </SelectionContext.Provider>
+            <Habits />
           </Route>
-
           <Route path="/hoje">
             <Today />
           </Route>

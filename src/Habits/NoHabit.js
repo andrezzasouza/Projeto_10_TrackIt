@@ -7,8 +7,6 @@ export default function NoHabit () {
   const { setDailyStats } = useContext(UserContext);
   setDailyStats(0);
 
-  // realmente preciso colocar esse stat aqui?
-
   return (
     <NoHabitStyle>
       <p>

@@ -1,9 +1,7 @@
-// import styled from "styled-components";
 import { useState, useContext, useEffect } from "react";
-import { DayButtonStyle } from "../LogInSignUp";
-import SelectionContext from "../SelectionContext";
+import { DayButtonStyle } from "../shared/LogInSignUp";
 
-export default function DayButton ({ index, day, selectedDays, setSelectedDays, setClear }) {
+export default function DayButton ({ index, day, selectedDays, setSelectedDays }) {
   
   const [marked, setMarked] = useState(false);  
 
@@ -13,15 +11,10 @@ export default function DayButton ({ index, day, selectedDays, setSelectedDays, 
         return true;
       }
     }
-
-    console.log("clicked", e);
-    console.log("index", index);
     setMarked(!marked);
     const alreadySelected = selectedDays.find(repeated);
-    console.log("aS", alreadySelected);
     if (alreadySelected !== undefined) {
       const removeSelection = selectedDays.filter((days) => days !== index);
-      console.log("rS", removeSelection);
       setSelectedDays(removeSelection);
     } else {
       setSelectedDays([...selectedDays, index]);

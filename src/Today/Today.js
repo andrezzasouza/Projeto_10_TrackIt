@@ -1,27 +1,25 @@
 import styled from "styled-components";
-
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import axios from "axios";
-import NoneToday from "./Today/NoneToday";
-import TodayHabit from "./Today/TodayHabit";
 
-import Header from "./Header";
-import FooterMenu from "./FooterMenu";
-import UserContext from "./UserContext";
+import NoneToday from "./NoneToday";
+import TodayHabit from "./TodayHabit";
+import Header from "../shared/Header";
+import FooterMenu from "../shared/FooterMenu";
+import UserContext from "../UserContext";
+
 import { useEffect, useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 export default function Today () {
 
   let today = dayjs().locale('pt-br').format('dddd, DD/MM');
-  console.log(today);
 
+  const history = useHistory();
   const { userData, dailyStats, setDailyStats } = useContext(UserContext);
   const [subtitle, setSubtitle] = useState(false)
   const [todayScreen, setTodayScreen] = useState("");
-  const [habitAmount, setHabitAmount] = useState(
-    "Nenhum hábito concluído ainda"
-  );
 
   const config = {
     headers: {
@@ -29,14 +27,17 @@ export default function Today () {
     },
   };
 
+  function loadError () {
+    alert("Algo deu errado.")
+    history.push("/")
+  }
+
   function loadToday(response) {
-    console.log("resp", response)
     response.data.length !== 0 ? (
       setTodayScreen(response.data.map((dailyTask, index) => <TodayHabit dailyTask={dailyTask} key={index} todayCallToServer={todayCallToServer} />))
      ) : (
       setTodayScreen(<NoneToday />)
     );
-    // converter ternário para if
 
     const totalTasks = response.data.length
     const amountDone = response.data.filter(amount => amount.done).length;
@@ -44,9 +45,7 @@ export default function Today () {
     setDailyStats(amountDone * 100 / totalTasks)
 
     setSubtitle(response.data.length !== 0);
-      // response.data.length !== 0 ? setHabitAmount(`${parseInt(dailyStats)}% dos hábitos concluídos`)
-      // : setHabitAmount(habitAmount);
-  
+
   }
 
   function todayCallToServer () {
@@ -56,7 +55,7 @@ export default function Today () {
     );
 
     promise.then(loadToday);
-    promise.catch();
+    promise.catch(loadError);
   }
 
   useEffect(() => {

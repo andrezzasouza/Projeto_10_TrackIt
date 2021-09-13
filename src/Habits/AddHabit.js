@@ -1,21 +1,15 @@
 import styled from "styled-components";
 import { useState, useContext } from "react";
 import UserContext from "../UserContext";
-import SelectionContext from "../SelectionContext";
 import axios from "axios";
 import DayButton from './DayButton'
-// import { useHistory } from "react-router-dom";
 
-import { InputStyle, DayHolder } from "../LogInSignUp";
+import { InputStyle, DayHolder } from "../shared/LogInSignUp";
 
 export default function AddHabit ({ show, setShow, habitCallToServer, selectedDays, setSelectedDays }) {
 
-  const { userData } = useContext(UserContext);
-  // const { marked, setMarked } = useContext(SelectionContext);
-  // const history = useHistory();
+  const { userData, setDailyStats } = useContext(UserContext);
 
-  const [clear, setClear] = useState()
-  // const [selectedDays, setSelectedDays] = useState([]);
   const [task, setTask] = useState("");
   const [enabled, setEnabled] = useState(true);
 
@@ -26,23 +20,40 @@ export default function AddHabit ({ show, setShow, habitCallToServer, selectedDa
     setEnabled(true);
   }
 
+  function reloadPercentage (response) {
+    const totalTasks = response.data.length;
+    const amountDone = response.data.filter((amount) => amount.done).length;
+
+    setDailyStats((amountDone * 100) / totalTasks);
+  }
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${userData.token}`,
+    },
+  };
+
+  function updatePercentage () {
+    const promise = axios.get(
+      "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today",
+      config
+    );
+
+    promise.then(reloadPercentage);
+  }
+
   function addedHabit() {
-    // criar hábito na página prinicipal
-    // desmarcar botões
-    console.log("aH", selectedDays)
     setEnabled(true);
-    setSelectedDays([])
+    setSelectedDays([]);
     setTask("");
     hideBox();
     habitCallToServer(selectedDays);
-    
-    // setDayTask(false);
+    updatePercentage();
   }
 
   function createNewHabit (e) {
     setEnabled(false);
     e.preventDefault();
-    // botão de adicionar faz o que enquanto o setEnabled tá false? Preciso desativar ele também?
 
     const config = {
       headers: {
@@ -65,14 +76,13 @@ export default function AddHabit ({ show, setShow, habitCallToServer, selectedDa
       promise.then(addedHabit);
       promise.catch(addError);
     } else {
-      alert("Escolha pelo menos 1 dia para realizar o hábito.")
+      alert("Escolha pelo menos 1 dia para realizar o hábito.");
       setEnabled(true);
     }
-    
   }
 
   function hideBox () {
-    setShow(false)
+    setShow(false);
   }
 
   return (
@@ -94,7 +104,6 @@ export default function AddHabit ({ show, setShow, habitCallToServer, selectedDa
               index={index} 
               selectedDays={selectedDays} 
               setSelectedDays={setSelectedDays} 
-              clear={clear}
             />)}
         </DayHolder>
         <ButtonHolder clickable={enabled}>

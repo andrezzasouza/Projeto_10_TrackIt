@@ -1,5 +1,5 @@
-import Header from '../Header';
-import FooterMenu from '../FooterMenu';
+import Header from '../shared/Header';
+import FooterMenu from '../shared/FooterMenu';
 import AddHabit from './AddHabit';
 import NoHabit from "./NoHabit";
 import CreatedHabit from './CreatedHabit';
@@ -18,7 +18,6 @@ export default function Habits () {
   const [selectedDays, setSelectedDays] = useState([]);
   const [ habitScreen, setHabitScreen ] = useState("");
   const [ show, setShow ] = useState(false);
-  // const [ currentState, setCurrentState] = useState
 
   const { userData } = useContext(UserContext);
   
@@ -43,23 +42,19 @@ export default function Habits () {
 
     promise.then(loadTasks);
     promise.catch(loadingError);
-
   }
   
   useEffect(() => {
     habitCallToServer();
-    // pensar no problema da renderização vazia
   }, [selectedDays]);
 
 
   function addBox() {
     setShow(true);
-    console.log("selectedDays", selectedDays)
   }
 
   function loadTasks(response) {
     response.data.length !== 0 ? setHabitScreen(response.data.map((currentTask, index) => <CreatedHabit currentTask={currentTask} habitCallToServer={habitCallToServer} key={index} />)) : setHabitScreen(<NoHabit />);
-    console.log("lT", response);
   }
 
   return (

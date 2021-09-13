@@ -6,8 +6,6 @@ export default function NoneToday() {
   const { setDailyStats } = useContext(UserContext);
   setDailyStats(0);
 
-  // realmente preciso colocar esse stat aqui?
-
   return (
     <NoTodayStyle>
       <p>

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import styled from "styled-components";
-import UserContext from "./UserContext";
+import UserContext from "../UserContext";
 import { useContext } from "react";
 
 export default function FooterMenu() {
@@ -23,9 +23,8 @@ export default function FooterMenu() {
               pathColor: "#FFF",
               textColor: "#FFF",
               trailColor: "transparent",
-              fontSize: "17.976px",
+              textSize: "17.976px",
               lineHeigh: "22px",
-              // fix font size using text property
             })}
           />
         </div>

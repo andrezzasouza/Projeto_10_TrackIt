@@ -1,8 +1,7 @@
-// import styled from "styled-components";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
 
-import { Container, Logo, InputStyle, BigButton, Alternate } from './LogInSignUp';
+import { Container, Logo, InputStyle, BigButton, Alternate } from './shared/LogInSignUp';
 import UserContext from "./UserContext";
 
 import { useHistory, Link } from 'react-router-dom';
@@ -20,7 +19,6 @@ export default function LogIn () {
 
   function enter (response) {
     setUserData(response.data)
-    console.log(response)
     history.push("/hoje");
     setEmail("");
     setPassword("");
@@ -79,7 +77,6 @@ export default function LogIn () {
               color="#FFFFFF"
               height={45}
               width={51}
-              // timeout={3000}
             />
           )}
         </BigButton>
