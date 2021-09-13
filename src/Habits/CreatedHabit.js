@@ -5,7 +5,7 @@ import axios from "axios";
 import { useContext } from "react";
 import UserContext from "../UserContext";
 
-export default function CreatedHabit ({currentTask}) {
+export default function CreatedHabit ({ currentTask, callToServer }) {
 
   const { userData } = useContext(UserContext);
 
@@ -21,10 +21,12 @@ export default function CreatedHabit ({currentTask}) {
   function deleteTask (e) {
     const deleteHabit = window.confirm("Você realmente quer deletar esse hábito?");
     if (deleteHabit) {
-      axios.delete(
+      const promise = axios.delete(
         `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${currentTask.id}`,
         config
       );
+      promise.then(() => callToServer());
+      promise.catch(() => "Algo deu errado. Tente novamente.")
     }
   }
 

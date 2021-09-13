@@ -26,17 +26,12 @@ export default function Habits () {
     },
   };
 
-  function loadTasks(response) {
-    response.data.length !== 0 ? setHabitScreen(response.data.map(currentTask => <CreatedHabit currentTask={currentTask} />)) : setHabitScreen(<NoHabit />);
-    console.log("lT", response);
-  }
-
   function loadingError() {
     alert("Algo deu errado. Tente novamente.");
     history.push("/");
   }
-  
-  useEffect(() => {
+
+  function callToServer () {
     const promise = axios.get(
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
       config
@@ -45,12 +40,21 @@ export default function Habits () {
     promise.then(loadTasks);
     promise.catch(loadingError);
 
+  }
+  
+  useEffect(() => {
+    callToServer();
     // pensar no problema da renderização vazia
   }, []);
 
 
   function addBox() {
     setShow(true);
+  }
+
+    function loadTasks(response) {
+    response.data.length !== 0 ? setHabitScreen(response.data.map(currentTask => <CreatedHabit currentTask={currentTask} callToServer={callToServer} />)) : setHabitScreen(<NoHabit />);
+    console.log("lT", response);
   }
 
   return (
@@ -65,6 +69,7 @@ export default function Habits () {
       <AddHabit
         show={show}
         setShow={setShow}
+        callToServer={callToServer}
       />
       {habitScreen}
       <FooterMenu />

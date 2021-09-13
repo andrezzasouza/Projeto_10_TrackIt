@@ -5,9 +5,9 @@ import axios from "axios";
 import DayButton from './DayButton'
 // import { useHistory } from "react-router-dom";
 
-import { InputStyle, DayHolder, DayButtonStyle } from "../LogInSignUp";
+import { InputStyle, DayHolder } from "../LogInSignUp";
 
-export default function AddHabit ({show, setShow}) {
+export default function AddHabit ({ show, setShow, callToServer }) {
 
   const { userData } = useContext(UserContext);
   // const history = useHistory();
@@ -15,8 +15,6 @@ export default function AddHabit ({show, setShow}) {
   const [selectedDays, setSelectedDays] = useState([]);
   const [task, setTask] = useState("");
   const [enabled, setEnabled] = useState(true);
-  // const [marked, setMarked] = useState(false);
-  // const [selectedDays, setSelectedDays] = useState([]);
 
   const days = ["D", "S", "T", "Q", "Q", "S", "S"]
 
@@ -50,13 +48,14 @@ export default function AddHabit ({show, setShow}) {
     setEnabled(true);
   }
 
-  function addedHabit(response) {
+  function addedHabit() {
     // criar hábito na página prinicipal
     // desmarcar botões
     console.log("aH", selectedDays)
     setEnabled(true);
     setTask("");
     hideBox();
+    callToServer();
   }
 
   function createNewHabit (e) {
