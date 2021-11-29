@@ -5,22 +5,23 @@ import axios from "axios";
 import { useState, useContext } from "react";
 import UserContext from "../UserContext";
 
-export default function TodayHabit( { dailyTask, todayCallToServer }) {
-
+export default function TodayHabit({ dailyTask, todayCallToServer }) {
   const { userData } = useContext(UserContext);
   const [taskDone, setTaskDone] = useState(dailyTask.done);
   const [current, setCurrent] = useState(dailyTask.currentSequence);
   const [highest, setHighest] = useState(dailyTask.highestSequence);
-  const [record, setRecord] = useState(current === highest && highest !== 0 && dailyTask.done === true);
+  const [record, setRecord] = useState(
+    current === highest && highest !== 0 && dailyTask.done === true
+  );
 
-  function removeChecked () {
+  function removeChecked() {
     setCurrent(current - 1);
     setHighest(highest - 1);
     setRecord(false);
     todayCallToServer();
   }
 
-  function addChecked () {
+  function addChecked() {
     setCurrent(current + 1);
     setHighest(highest + 1);
     if (current === highest) {
@@ -28,12 +29,12 @@ export default function TodayHabit( { dailyTask, todayCallToServer }) {
     }
     todayCallToServer();
   }
-  function markAgain () {
+  function markAgain() {
     setTaskDone(!!taskDone);
     todayCallToServer();
   }
 
-  function checkTask () {
+  function checkTask() {
     if (dailyTask.done) {
       setTaskDone(!taskDone);
       const promise = axios({
@@ -66,15 +67,11 @@ export default function TodayHabit( { dailyTask, todayCallToServer }) {
         <div>
           <p>
             Sequência atual:{" "}
-            <CurrentStyle done={taskDone}>
-              {current} dias
-            </CurrentStyle>
+            <CurrentStyle done={taskDone}>{current} dias</CurrentStyle>
           </p>
           <p>
             Seu recorde:{" "}
-            <HighestStyle record={record}>
-              {highest} dias
-            </HighestStyle>
+            <HighestStyle record={record}>{highest} dias</HighestStyle>
           </p>
         </div>
       </div>
@@ -91,7 +88,7 @@ export default function TodayHabit( { dailyTask, todayCallToServer }) {
 }
 
 const TodayHabitStyle = styled.div`
-  width: 340px;
+  width: 100%;
   padding: 13px 11px 15px 15px;
   margin: 0 0 10px;
   border-radius: 5px;
@@ -125,6 +122,6 @@ const CheckButton = styled.button`
   width: 69px;
   height: 69px;
   border-radius: 5px;
-  background-color: ${(props) => props.done ? '#8FC549' : '#ebebeb'};
-  border: ${(props) => props.done ? 'none' : '1px solid #e7e7e7'};
+  background-color: ${(props) => (props.done ? "#8FC549" : "#ebebeb")};
+  border: ${(props) => (props.done ? "none" : "1px solid #e7e7e7")};
 `;

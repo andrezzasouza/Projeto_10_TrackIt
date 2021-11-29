@@ -14,10 +14,10 @@ const Container = styled.main`
 const Logo = styled.img`
   width: 180px;
   height: 178.38px;
-  margin: 0 calc((100% - 180px) /2) 32.62px;
+  margin: 0 calc((100% - 180px) / 2) 32.62px;
 `;
 const InputStyle = styled.input`
-  width: 303px;
+  width: 100%;
   height: 45px;
   margin: 0 0 6px;
   padding: 9px 11px 11px;
@@ -36,19 +36,19 @@ const InputStyle = styled.input`
 `;
 
 const BigButton = styled.button`
-  width: 303px;
+  width: 100%;
   height: 45px;
   border: none;
   border-radius: 4.63636px;
   margin: 0 0 25px;
   background-color: #52b6ff;
   color: #ffffff;
-  opacity: ${props => props.clickable ? 1 : 0.7};
+  opacity: ${(props) => (props.clickable ? 1 : 0.7)};
   font-size: 20.976px;
   line-height: 26px;
   text-align: center;
   font-family: "Lexend Deca", sans-serif;
-  pointer-events: ${props => props.clickable ? 'auto' : 'none'};
+  pointer-events: ${(props) => (props.clickable ? "auto" : "none")};
 `;
 
 const Alternate = styled.p`
@@ -61,18 +61,19 @@ const Alternate = styled.p`
 
 const DayHolder = styled.div`
   display: flex;
-  pointer-events: ${(props) => props.clickable ? 'auto' : 'none'};
+  pointer-events: ${(props) => (props.clickable ? "auto" : "none")};
 `;
 
 const DayButtonStyle = styled.button`
   width: 30px;
   height: 30px;
-  border: ${(props) => props.clicked ? '1px solid #CFCFCF;' : '1px solid #d5d5d5'};
+  border: ${(props) =>
+    props.clicked ? "1px solid #CFCFCF;" : "1px solid #d5d5d5"};
   box-sizing: border-box;
   border-radius: 5px;
   margin-right: 4px;
-  background-color: ${(props) => props.clicked ? '#CFCFCF' : '#ffffff'};
-  color: ${(props) => props.clicked ? '#ffffff' : '#dbdbdb'};
+  background-color: ${(props) => (props.clicked ? "#CFCFCF" : "#ffffff")};
+  color: ${(props) => (props.clicked ? "#ffffff" : "#dbdbdb")};
   font-size: 19.976px;
   line-height: 25px;
 `;
@@ -84,5 +85,5 @@ export {
   BigButton,
   Alternate,
   DayHolder,
-  DayButtonStyle
-}
+  DayButtonStyle,
+};
