@@ -70,7 +70,7 @@ export default function Habits() {
       <Header />
       <MyHabits>
         <h2>Meus hábitos</h2>
-        <button onClick={() => addBox()} type="button">
+        <button onClick={() => addBox()} type="button" id="add">
           <IoAddSharp color="#FFFFFF" title="" font-size="25px" />
         </button>
       </MyHabits>
