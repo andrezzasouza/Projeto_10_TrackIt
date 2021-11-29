@@ -3,7 +3,7 @@ import Loader from 'react-loader-spinner';
 
 import { useHistory, Link } from 'react-router-dom';
 import { useState, useContext } from 'react';
-import axios from 'axios';
+import API from '../services/api/api';
 import UserContext from '../contexts/UserContext';
 import {
   Container,
@@ -19,7 +19,6 @@ export default function LogIn() {
   const [enabled, setEnabled] = useState(true);
 
   const { setUserData } = useContext(UserContext);
-
   const history = useHistory();
 
   function enter(response) {
@@ -35,20 +34,19 @@ export default function LogIn() {
     setEnabled(true);
   }
 
-  function loggingIn(e) {
-    e.preventDefault();
-    setEnabled(false);
-
+  function prepareBody() {
     const body = {
       email,
       password
     };
+    return body;
+  }
 
-    const promise = axios.post(
-      'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login',
-      body
-    );
+  function loggingIn(e) {
+    e.preventDefault();
+    setEnabled(false);
 
+    const promise = API.post('/auth/login', prepareBody());
     promise.then(enter);
     promise.catch(tryAgain);
   }

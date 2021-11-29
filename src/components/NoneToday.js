@@ -1,6 +1,6 @@
-import styled from 'styled-components';
 import { useContext } from 'react';
 import UserContext from '../contexts/UserContext';
+import { NoTodayStyle } from '../assets/styles/TodayStyle';
 
 export default function NoneToday() {
   const { setDailyStats } = useContext(UserContext);
@@ -15,11 +15,3 @@ export default function NoneToday() {
     </NoTodayStyle>
   );
 }
-
-const NoTodayStyle = styled.div`
-  width: 338px;
-  font-size: 17.976px;
-  line-height: 22px;
-  text-align: left;
-  color: #666666;
-`;

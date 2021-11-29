@@ -8,14 +8,6 @@ package-lock.json
 
 # testing
 /coverage
-/cypress
-/cypress.json
-
-#dev
-.eslintrc.json
-.eslintcache
-.prettierrc.json
-/.husky
 
 # production
 /build
@@ -36,3 +28,5 @@ logs
 .env.test.local
 .env.production.local
 .env.production
+.env.test
+.env.development

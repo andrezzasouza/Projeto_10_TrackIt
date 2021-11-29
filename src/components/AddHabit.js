@@ -1,9 +1,9 @@
-import styled from 'styled-components';
 import { useState, useContext } from 'react';
-import axios from 'axios';
+import API from '../services/api/api';
 import UserContext from '../contexts/UserContext';
 import DayButton from './DayButton';
 
+import { AddHabitStyle, ButtonHolder } from '../assets/styles/HabitsStyle';
 import { InputStyle, DayHolder } from '../assets/styles/LogInSignUp';
 
 export default function AddHabit({
@@ -39,11 +39,7 @@ export default function AddHabit({
   };
 
   function updatePercentage() {
-    const promise = axios.get(
-      'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today',
-      config
-    );
-
+    const promise = API.get('/habits/today', config);
     promise.then(reloadPercentage);
   }
 
@@ -70,11 +66,7 @@ export default function AddHabit({
     };
 
     if (selectedDays.length !== 0) {
-      const promise = axios.post(
-        'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits',
-        body,
-        config
-      );
+      const promise = API.post('/habits', body, config);
 
       promise.then(addedHabit);
       promise.catch(addError);
@@ -116,39 +108,3 @@ export default function AddHabit({
     </AddHabitStyle>
   );
 }
-
-const AddHabitStyle = styled.div`
-  width: 340px;
-  height: 180px;
-  border-radius: 5px;
-  padding: 18px 18px 15px 19px;
-  margin: 0 0 29px;
-  background-color: #ffffff;
-  display: ${(props) => (props.visible ? 'block' : 'none')};
-`;
-
-const ButtonHolder = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  opacity: ${(props) => (props.clickable ? 1 : 0.7)};
-  pointer-events: ${(props) => (props.clickable ? 'auto' : 'none')};
-
-  button {
-    width: 84px;
-    height: 35px;
-    margin: 29px 0 0 4px;
-    border-radius: 4.63636px;
-    border: none;
-    font-family: 'Lexend Deca', sans-serif;
-  }
-
-  & :first-child {
-    background-color: #ffffff;
-    color: #52b6ff;
-  }
-
-  & :last-child {
-    background: #52b6ff;
-    color: #ffffff;
-  }
-`;

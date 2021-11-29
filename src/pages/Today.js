@@ -1,14 +1,14 @@
-import styled from 'styled-components';
 import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br';
-import axios from 'axios';
 
 import { useEffect, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import API from '../services/api/api';
 import NoneToday from '../components/NoneToday';
 import TodayHabit from '../components/TodayHabit';
-import Header from '../assets/styles/Header';
-import FooterMenu from '../assets/styles/FooterMenu';
+import Header from '../components/Header';
+import FooterMenu from '../components/FooterMenu';
+import { TodayContents, ThisDate, Subtitle } from '../assets/styles/TodayStyle';
 import UserContext from '../contexts/UserContext';
 
 export default function Today() {
@@ -30,13 +30,13 @@ export default function Today() {
     history.push('/');
   }
 
-  function loadToday(response) {
-    if (response.data.length !== 0) {
+  function loadToday(res) {
+    if (res.data.length !== 0) {
       setTodayScreen(
-        response.data.map((dailyTask, index) => (
+        res.data.map((dailyTask) => (
           <TodayHabit
             dailyTask={dailyTask}
-            key={index}
+            key={dailyTask.id}
             todayCallToServer={todayCallToServer}
           />
         ))
@@ -45,19 +45,15 @@ export default function Today() {
       setTodayScreen(<NoneToday />);
     }
 
-    const totalTasks = response.data.length;
-    const amountDone = response.data.filter((amount) => amount.done).length;
+    const totalTasks = res.data.length;
+    const amountDone = res.data.filter((amount) => amount.done).length;
 
     setDailyStats((amountDone * 100) / totalTasks);
-
-    setSubtitle(response.data.length !== 0);
+    setSubtitle(res.data.length !== 0);
   }
 
   function todayCallToServer() {
-    const promise = axios.get(
-      'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today',
-      config
-    );
+    const promise = API.get('/habits/today', config);
 
     promise.then(loadToday);
     promise.catch(loadError);
@@ -83,24 +79,3 @@ export default function Today() {
     </TodayContents>
   );
 }
-
-const TodayContents = styled.main`
-  margin: 90px 17px 111px 18px;
-`;
-
-const ThisDate = styled.div`
-  margin: 0 0 28px;
-
-  h2 {
-    font-size: 22.976px;
-    line-height: 29px;
-    color: #126ba5;
-  }
-`;
-
-const Subtitle = styled.p`
-  font-size: 17.976px;
-  line-height: 22px;
-
-  color: ${(props) => (props.done ? '#8FC549' : '#bababa')};
-`;
