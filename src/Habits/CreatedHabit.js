@@ -6,8 +6,7 @@ import { useContext } from "react";
 import UserContext from "../UserContext";
 import HabitDay from "./HabitDay";
 
-export default function CreatedHabit ({ currentTask, habitCallToServer }) {
-
+export default function CreatedHabit({ currentTask, habitCallToServer }) {
   const { userData, setDailyStats } = useContext(UserContext);
   const days = ["D", "S", "T", "Q", "Q", "S", "S"];
 
@@ -17,36 +16,38 @@ export default function CreatedHabit ({ currentTask, habitCallToServer }) {
     },
   };
 
-    function reloadPercentage (response) {
+  function reloadPercentage(response) {
     const totalTasks = response.data.length;
     const amountDone = response.data.filter((amount) => amount.done).length;
 
     setDailyStats((amountDone * 100) / totalTasks);
   }
 
-  function updatePercentage () {
+  function updatePercentage() {
     const promise = axios.get(
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today",
       config
     );
 
-    promise.then(reloadPercentage)
+    promise.then(reloadPercentage);
   }
-  
-  function createSuccess () {
+
+  function createSuccess() {
     habitCallToServer();
     updatePercentage();
   }
 
-  function deleteTask (e) {
-    const deleteHabit = window.confirm("Você realmente quer deletar esse hábito?");
+  function deleteTask(e) {
+    const deleteHabit = window.confirm(
+      "Você realmente quer deletar esse hábito?"
+    );
     if (deleteHabit) {
       const promise = axios.delete(
         `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${currentTask.id}`,
         config
       );
       promise.then(createSuccess);
-      promise.catch(() => "Algo deu errado. Tente novamente.")
+      promise.catch(() => "Algo deu errado. Tente novamente.");
     }
   }
 
@@ -57,15 +58,21 @@ export default function CreatedHabit ({ currentTask, habitCallToServer }) {
         <IoTrashOutline color={"#666666"} />
       </IconHolder>
       <DayHolder>
-        {days.map((day, index) => <HabitDay day={day} key={index} index={index} currentTaskDays={currentTask.days} />
-        )}
+        {days.map((day, index) => (
+          <HabitDay
+            day={day}
+            key={index}
+            index={index}
+            currentTaskDays={currentTask.days}
+          />
+        ))}
       </DayHolder>
     </CreatedHabitStyle>
   );
 }
 
 const CreatedHabitStyle = styled.div`
-  width: 340px;
+  width: 100%;
   border-radius: 5px;
   padding: 13px 27px 15px 15px;
   background-color: #ffffff;
