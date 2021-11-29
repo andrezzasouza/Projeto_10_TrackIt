@@ -75,7 +75,7 @@ export default function TodayHabit({ dailyTask, todayCallToServer }) {
           </p>
         </div>
       </div>
-      <CheckButton done={taskDone} onClick={() => checkTask()}>
+      <CheckButton done={taskDone} onClick={() => checkTask()} id="done">
         <IoCheckmark
           color="#FFFFFF"
           title=""

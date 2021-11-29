@@ -54,7 +54,7 @@ export default function CreatedHabit({ currentTask, habitCallToServer }) {
   return (
     <CreatedHabitStyle>
       <p>{currentTask.name}</p>
-      <IconHolder onClick={() => deleteTask()}>
+      <IconHolder onClick={() => deleteTask()} id="trash">
         <IoTrashOutline color="#666666" />
       </IconHolder>
       <DayHolder>
