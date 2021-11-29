@@ -1,9 +1,8 @@
-import styled from "styled-components";
-import UserContext from "../UserContext";
-import { useContext } from "react";
+import styled from 'styled-components';
+import { useContext } from 'react';
+import UserContext from '../contexts/UserContext';
 
-export default function NoHabit () {
-
+export default function NoHabit() {
   const { setDailyStats } = useContext(UserContext);
   setDailyStats(0);
 

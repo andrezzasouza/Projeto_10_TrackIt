@@ -1,49 +1,55 @@
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import Loader from "react-loader-spinner";
-
-import { Container, Logo, InputStyle, BigButton, Alternate } from './shared/LogInSignUp';
-import UserContext from "./UserContext";
+/* eslint-disable no-alert */
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import Loader from 'react-loader-spinner';
 
 import { useHistory, Link } from 'react-router-dom';
 import { useState, useContext } from 'react';
 import axios from 'axios';
+import UserContext from '../contexts/UserContext';
+import {
+  Container,
+  Logo,
+  InputStyle,
+  BigButton,
+  Alternate
+} from '../assets/styles/LogInSignUp';
 
-export default function LogIn () {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+export default function LogIn() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [enabled, setEnabled] = useState(true);
 
   const { setUserData } = useContext(UserContext);
 
   const history = useHistory();
 
-  function enter (response) {
-    setUserData(response.data)
-    history.push("/hoje");
-    setEmail("");
-    setPassword("");
+  function enter(response) {
+    setUserData(response.data);
+    history.push('/hoje');
+    setEmail('');
+    setPassword('');
     setEnabled(true);
   }
 
-  function tryAgain () {
-    alert("Algo deu errado. Tente novamente.");
+  function tryAgain() {
+    alert('Algo deu errado. Tente novamente.');
     setEnabled(true);
   }
 
-  function loggingIn (e) {
+  function loggingIn(e) {
     e.preventDefault();
     setEnabled(false);
 
     const body = {
-      email: email,
-      password: password
+      email,
+      password
     };
 
     const promise = axios.post(
-      "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",
+      'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login',
       body
     );
-    
+
     promise.then(enter);
     promise.catch(tryAgain);
   }
@@ -70,23 +76,15 @@ export default function LogIn () {
         />
         <BigButton type="submit" clickable={enabled}>
           {enabled ? (
-            "Entrar"
+            'Entrar'
           ) : (
-            <Loader
-              type="ThreeDots"
-              color="#FFFFFF"
-              height={45}
-              width={51}
-            />
+            <Loader type="ThreeDots" color="#FFFFFF" height={45} width={51} />
           )}
         </BigButton>
       </form>
-      <Link to={enabled ? "/cadastro" : ""}>
-        <Alternate>
-          Não tem uma conta? Cadastre-se!
-        </Alternate>
+      <Link to={enabled ? '/cadastro' : ''}>
+        <Alternate>Não tem uma conta? Cadastre-se!</Alternate>
       </Link>
     </Container>
   );
 }
-

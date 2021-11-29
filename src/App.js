@@ -1,16 +1,16 @@
-import LogIn from './LogIn';
-import SignUp from './SignUp';
-import Habits from './Habits/Habits';
-import Today from './Today/Today';
-import History from './History';
-
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { useState } from 'react';
-import UserContext from "./UserContext";
+import UserContext from './contexts/UserContext';
+
+import LogIn from './pages/LogIn';
+import SignUp from './pages/SignUp';
+import Habits from './pages/Habits';
+import Today from './pages/Today';
+import History from './pages/History';
+import GlobalStyle from './assets/styles/GlobalStyle';
 
 function App() {
-
-  const [userData, setUserData] = useState("");
+  const [userData, setUserData] = useState('');
   const [dailyStats, setDailyStats] = useState(0);
 
   return (
@@ -18,6 +18,7 @@ function App() {
       value={{ userData, setUserData, dailyStats, setDailyStats }}
     >
       <BrowserRouter>
+        <GlobalStyle />
         <Switch>
           <Route path="/" exact>
             <LogIn />

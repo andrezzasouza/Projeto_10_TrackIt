@@ -1,18 +1,14 @@
 import styled from 'styled-components';
-import UserContext from "../UserContext";
-import { useContext } from "react";
+import { useContext } from 'react';
+import UserContext from '../../contexts/UserContext';
 
-export default function Header () {
+export default function Header() {
   const { userData } = useContext(UserContext);
-
 
   return (
     <Heading>
       <h1>TrackIt</h1>
-      <img
-        src={userData.image}
-        alt={`Foto de ${userData.name}`}
-      />
+      <img src={userData.image} alt={`Foto de ${userData.name}`} />
     </Heading>
   );
 }
@@ -31,7 +27,7 @@ const Heading = styled.header`
   background-color: #126ba5;
 
   h1 {
-    font-family: "Playball", cursive;
+    font-family: 'Playball', cursive;
     font-size: 38.982px;
     line-height: 49px;
     color: #ffffff;
