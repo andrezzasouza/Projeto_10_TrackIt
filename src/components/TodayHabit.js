@@ -1,9 +1,14 @@
 import { IoCheckmark } from 'react-icons/io5';
-import styled from 'styled-components';
-import axios from 'axios';
-
 import { useState, useContext } from 'react';
+import API from '../services/api/api';
+
 import UserContext from '../contexts/UserContext';
+import {
+  CheckButton,
+  HighestStyle,
+  CurrentStyle,
+  TodayHabitStyle
+} from '../assets/styles/TodayStyle';
 
 export default function TodayHabit({ dailyTask, todayCallToServer }) {
   const { userData } = useContext(UserContext);
@@ -34,27 +39,25 @@ export default function TodayHabit({ dailyTask, todayCallToServer }) {
     todayCallToServer();
   }
 
+  const config = {
+    headers: {
+      Authorization: `Bearer ${userData.token}`
+    }
+  };
+
+  function configureAxios(taskId, taskStat) {
+    const promise = API.post(`/habits/${taskId}/${taskStat}`, config);
+    return promise;
+  }
+
   function checkTask() {
+    setTaskDone(!taskDone);
     if (dailyTask.done) {
-      setTaskDone(!taskDone);
-      const promise = axios({
-        method: 'post',
-        url: `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${dailyTask.id}/uncheck`,
-        headers: {
-          Authorization: `Bearer ${userData.token}`
-        }
-      });
+      const promise = configureAxios(dailyTask.id, 'unchecked');
       promise.then(removeChecked);
       promise.catch(markAgain);
     } else {
-      setTaskDone(!taskDone);
-      const promise = axios({
-        method: 'post',
-        url: `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${dailyTask.id}/check`,
-        headers: {
-          Authorization: `Bearer ${userData.token}`
-        }
-      });
+      const promise = configureAxios(dailyTask.id, 'checked');
       promise.then(addChecked);
       promise.catch(markAgain);
     }
@@ -75,7 +78,7 @@ export default function TodayHabit({ dailyTask, todayCallToServer }) {
           </p>
         </div>
       </div>
-      <CheckButton done={taskDone} onClick={() => checkTask()}>
+      <CheckButton done={taskDone} onClick={() => checkTask()} id="done">
         <IoCheckmark
           color="#FFFFFF"
           title=""
@@ -86,42 +89,3 @@ export default function TodayHabit({ dailyTask, todayCallToServer }) {
     </TodayHabitStyle>
   );
 }
-
-const TodayHabitStyle = styled.div`
-  width: 100%;
-  padding: 13px 11px 15px 15px;
-  margin: 0 0 10px;
-  border-radius: 5px;
-  display: flex;
-  justify-content: space-between;
-  background-color: #ffffff;
-  color: #666666;
-
-  h3 {
-    font-size: 19.976px;
-    line-height: 25px;
-    margin: 0 0 7px;
-    word-break: break-all;
-  }
-
-  p {
-    font-size: 12.976px;
-    line-height: 16px;
-  }
-`;
-
-const CurrentStyle = styled.span`
-  color: ${(props) => (props.done ? '#8FC549' : '#666666')};
-`;
-
-const HighestStyle = styled.span`
-  color: ${(props) => (props.record ? '#8FC549' : '#666666')};
-`;
-
-const CheckButton = styled.button`
-  width: 69px;
-  height: 69px;
-  border-radius: 5px;
-  background-color: ${(props) => (props.done ? '#8FC549' : '#ebebeb')};
-  border: ${(props) => (props.done ? 'none' : '1px solid #e7e7e7')};
-`;

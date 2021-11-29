@@ -2,8 +2,8 @@ import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import Loader from 'react-loader-spinner';
 
 import { useHistory, Link } from 'react-router-dom';
-import axios from 'axios';
 import { useState } from 'react';
+import API from '../services/api/api';
 import {
   Container,
   Logo,
@@ -35,21 +35,21 @@ export default function SignUp() {
     setEnabled(true);
   }
 
-  function signingUp(e) {
-    e.preventDefault();
-    setEnabled(false);
-
+  function prepareBody() {
     const body = {
       email: createEmail,
       name: createName,
       image: createPhoto,
       password: createPassword
     };
-    const promise = axios.post(
-      'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up',
-      body
-    );
+    return body;
+  }
 
+  function signingUp(e) {
+    e.preventDefault();
+    setEnabled(false);
+
+    const promise = API.post('/auth/sign-up', prepareBody());
     promise.then(createUser);
     promise.catch(creationError);
   }

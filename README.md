@@ -28,6 +28,18 @@ It allows you to:
 
 This app can help you establish a new habit and keep it. Choose how your dream routine would be like and let TrackIt guide you towards it!
 
+<h3>Why?</h3>
+
+TrackIt is my dream app. As a person who has picked up habits only to stop after a while, TrackIt is amazing because it holds you accountable and it motivates you to log in your habits every day.
+
+The great sensation you feel when you check that a habit is completed is wonderful and I believe many people can benefit from an app like that.
+
+<h3> Future Features </h3>
+<a href="https://github.com/andrezzasouza/TrackIt/issues/5">
+
+- Implement log out feature
+  </a>
+
 <h2 id="tech">Technologies</h2>
 
 - Javascript

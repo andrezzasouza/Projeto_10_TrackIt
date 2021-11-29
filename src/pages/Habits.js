@@ -1,10 +1,11 @@
 import { IoAddSharp } from 'react-icons/io5';
 import { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
-import styled from 'styled-components';
-import Header from '../assets/styles/Header';
-import FooterMenu from '../assets/styles/FooterMenu';
+import API from '../services/api/api';
+
+import { MyHabits, Contents } from '../assets/styles/HabitsStyle';
+import Header from '../components/Header';
+import FooterMenu from '../components/FooterMenu';
 import AddHabit from '../components/AddHabit';
 import NoHabit from '../components/NoHabit';
 import CreatedHabit from '../components/CreatedHabit';
@@ -38,11 +39,11 @@ export default function Habits() {
   function loadTasks(res) {
     if (res.data.length !== 0) {
       setHabitScreen(
-        res.data.map((currentTask, index) => (
+        res.data.map((currentTask) => (
           <CreatedHabit
             currentTask={currentTask}
             habitCallToServer={habitCallToServer}
-            key={index}
+            key={currentTask.id}
           />
         ))
       );
@@ -52,11 +53,7 @@ export default function Habits() {
   }
 
   function habitCallToServer() {
-    const promise = axios.get(
-      'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits',
-      config
-    );
-
+    const promise = API.get('/habits', config);
     promise.then(loadTasks);
     promise.catch(loadingError);
   }
@@ -70,7 +67,7 @@ export default function Habits() {
       <Header />
       <MyHabits>
         <h2>Meus hábitos</h2>
-        <button onClick={() => addBox()} type="button">
+        <button onClick={() => addBox()} type="button" id="add">
           <IoAddSharp color="#FFFFFF" title="" font-size="25px" />
         </button>
       </MyHabits>
@@ -86,36 +83,3 @@ export default function Habits() {
     </Contents>
   );
 }
-
-const Contents = styled.main`
-  margin: 90px 17px 111px 18px;
-`;
-
-const MyHabits = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0 0 28px;
-
-  h2 {
-    font-size: 22.976px;
-    line-height: 29px;
-    color: #126ba5;
-  }
-
-  button {
-    width: 40px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    border-radius: 4.63636px;
-    font-family: 'Lexend Deca', sans-serif;
-    font-size: 26.976px;
-    line-height: 34px;
-    vertical-align: middle;
-    background-color: #52b6ff;
-    color: #ffffff;
-  }
-`;
