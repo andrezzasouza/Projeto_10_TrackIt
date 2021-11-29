@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import UserContext from "../UserContext";
-import { useContext } from "react";
+import styled from 'styled-components';
+import { useContext } from 'react';
+import UserContext from '../contexts/UserContext';
 
 export default function NoneToday() {
   const { setDailyStats } = useContext(UserContext);
@@ -9,7 +9,8 @@ export default function NoneToday() {
   return (
     <NoTodayStyle>
       <p>
-        Você não tem nenhum hábito hoje. Adicione um hábito no dia de hoje para trackear.
+        Você não tem nenhum hábito hoje. Adicione um hábito no dia de hoje para
+        trackear.
       </p>
     </NoTodayStyle>
   );

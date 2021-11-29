@@ -1,36 +1,41 @@
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import Loader from "react-loader-spinner";
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import Loader from 'react-loader-spinner';
 
-import { Container, Logo, InputStyle, BigButton, Alternate } from "./shared/LogInSignUp";
-import { useHistory, Link } from "react-router-dom";
-import axios from "axios";
-import { useState } from "react";
+import { useHistory, Link } from 'react-router-dom';
+import axios from 'axios';
+import { useState } from 'react';
+import {
+  Container,
+  Logo,
+  InputStyle,
+  BigButton,
+  Alternate
+} from '../assets/styles/LogInSignUp';
 
 export default function SignUp() {
-
-  const [createEmail, setCreateEmail] = useState("");
-  const [createPassword, setCreatePassword] = useState("");
-  const [createName, setCreateName] = useState("");
-  const [createPhoto, setCreatePhoto] = useState("");
+  const [createEmail, setCreateEmail] = useState('');
+  const [createPassword, setCreatePassword] = useState('');
+  const [createName, setCreateName] = useState('');
+  const [createPhoto, setCreatePhoto] = useState('');
   const [enabled, setEnabled] = useState(true);
 
   const history = useHistory();
 
   function createUser() {
-    history.push("/");
-    setCreateEmail("");
-    setCreatePassword("");
-    setCreateName("");
-    setCreatePhoto("");
+    history.push('/');
+    setCreateEmail('');
+    setCreatePassword('');
+    setCreateName('');
+    setCreatePhoto('');
     setEnabled(true);
   }
 
-  function creationError (response) {
-    alert("Algo deu errado. Tente novamente.");
+  function creationError() {
+    alert('Algo deu errado. Tente novamente.');
     setEnabled(true);
   }
 
-  function signingUp (e) {
+  function signingUp(e) {
     e.preventDefault();
     setEnabled(false);
 
@@ -41,7 +46,7 @@ export default function SignUp() {
       password: createPassword
     };
     const promise = axios.post(
-      "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up",
+      'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up',
       body
     );
 
@@ -85,26 +90,17 @@ export default function SignUp() {
           onChange={(e) => setCreatePhoto(e.target.value)}
           required
         />
-        <BigButton 
-          type="submit"
-          clickable={enabled}
-        >
+        <BigButton type="submit" clickable={enabled}>
           {enabled ? (
             'Cadastrar'
-           ) : (
-            <Loader
-              type="ThreeDots"
-              color="#FFFFFF"
-              height={45}
-              width={51}
-            />
-           )}
+          ) : (
+            <Loader type="ThreeDots" color="#FFFFFF" height={45} width={51} />
+          )}
         </BigButton>
       </form>
-      <Link to={enabled ? "/" : ""}>
+      <Link to={enabled ? '/' : ''}>
         <Alternate>Já tem uma conta? Faça login!</Alternate>
       </Link>
     </Container>
   );
 }
-

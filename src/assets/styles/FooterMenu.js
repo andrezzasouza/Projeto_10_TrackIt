@@ -1,12 +1,11 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
-import styled from "styled-components";
-import UserContext from "../UserContext";
-import { useContext } from "react";
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+import styled from 'styled-components';
+import UserContext from '../../contexts/UserContext';
 
 export default function FooterMenu() {
-
   const { dailyStats } = useContext(UserContext);
 
   return (
@@ -18,13 +17,13 @@ export default function FooterMenu() {
         <div>
           <CircularProgressbar
             value={dailyStats}
-            text={`Hoje`}
+            text="Hoje"
             styles={buildStyles({
-              pathColor: "#FFF",
-              textColor: "#FFF",
-              trailColor: "transparent",
-              textSize: "17.976px",
-              lineHeigh: "22px",
+              pathColor: '#FFF',
+              textColor: '#FFF',
+              trailColor: 'transparent',
+              textSize: '17.976px',
+              lineHeigh: '22px'
             })}
           />
         </div>

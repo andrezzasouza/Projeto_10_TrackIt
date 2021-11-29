@@ -1,19 +1,19 @@
-import styled from "styled-components";
-import { IoTrashOutline } from "react-icons/io5";
-import { DayHolder } from "../shared/LogInSignUp";
-import axios from "axios";
-import { useContext } from "react";
-import UserContext from "../UserContext";
-import HabitDay from "./HabitDay";
+import styled from 'styled-components';
+import { IoTrashOutline } from 'react-icons/io5';
+import axios from 'axios';
+import { useContext } from 'react';
+import { DayHolder } from '../assets/styles/LogInSignUp';
+import UserContext from '../contexts/UserContext';
+import HabitDay from './HabitDay';
 
 export default function CreatedHabit({ currentTask, habitCallToServer }) {
   const { userData, setDailyStats } = useContext(UserContext);
-  const days = ["D", "S", "T", "Q", "Q", "S", "S"];
+  const days = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
 
   const config = {
     headers: {
-      Authorization: `Bearer ${userData.token}`,
-    },
+      Authorization: `Bearer ${userData.token}`
+    }
   };
 
   function reloadPercentage(response) {
@@ -25,7 +25,7 @@ export default function CreatedHabit({ currentTask, habitCallToServer }) {
 
   function updatePercentage() {
     const promise = axios.get(
-      "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today",
+      'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today',
       config
     );
 
@@ -37,9 +37,9 @@ export default function CreatedHabit({ currentTask, habitCallToServer }) {
     updatePercentage();
   }
 
-  function deleteTask(e) {
+  function deleteTask() {
     const deleteHabit = window.confirm(
-      "Você realmente quer deletar esse hábito?"
+      'Você realmente quer deletar esse hábito?'
     );
     if (deleteHabit) {
       const promise = axios.delete(
@@ -47,15 +47,15 @@ export default function CreatedHabit({ currentTask, habitCallToServer }) {
         config
       );
       promise.then(createSuccess);
-      promise.catch(() => "Algo deu errado. Tente novamente.");
+      promise.catch(() => 'Algo deu errado. Tente novamente.');
     }
   }
 
   return (
     <CreatedHabitStyle>
       <p>{currentTask.name}</p>
-      <IconHolder onClick={deleteTask}>
-        <IoTrashOutline color={"#666666"} />
+      <IconHolder onClick={() => deleteTask()}>
+        <IoTrashOutline color="#666666" />
       </IconHolder>
       <DayHolder>
         {days.map((day, index) => (

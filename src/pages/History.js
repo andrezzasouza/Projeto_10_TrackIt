@@ -1,17 +1,15 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import Header from "./shared/Header";
-import FooterMenu from "./shared/FooterMenu";
+import Header from '../assets/styles/Header';
+import FooterMenu from '../assets/styles/FooterMenu';
 
-export default function History () {
+export default function History() {
   return (
     <HistoryContent>
       <Header />
       <MyHistory>
         <h3>Histórico</h3>
-        <p>
-          Em breve você poderá ver o histórico dos seus hábitos aqui!
-        </p>
+        <p>Em breve você poderá ver o histórico dos seus hábitos aqui!</p>
       </MyHistory>
       <FooterMenu />
     </HistoryContent>
