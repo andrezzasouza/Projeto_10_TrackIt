@@ -1,6 +1,3 @@
-/* eslint-disable no-use-before-define */
-/* eslint-disable no-unused-expressions */
-/* eslint-disable no-alert */
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br';
@@ -34,17 +31,19 @@ export default function Today() {
   }
 
   function loadToday(response) {
-    response.data.length !== 0
-      ? setTodayScreen(
-          response.data.map((dailyTask, index) => (
-            <TodayHabit
-              dailyTask={dailyTask}
-              key={index}
-              todayCallToServer={todayCallToServer}
-            />
-          ))
-        )
-      : setTodayScreen(<NoneToday />);
+    if (response.data.length !== 0) {
+      setTodayScreen(
+        response.data.map((dailyTask, index) => (
+          <TodayHabit
+            dailyTask={dailyTask}
+            key={index}
+            todayCallToServer={todayCallToServer}
+          />
+        ))
+      );
+    } else {
+      setTodayScreen(<NoneToday />);
+    }
 
     const totalTasks = response.data.length;
     const amountDone = response.data.filter((amount) => amount.done).length;

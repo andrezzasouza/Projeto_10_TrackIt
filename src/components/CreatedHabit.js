@@ -1,4 +1,3 @@
-/* eslint-disable no-alert */
 import styled from 'styled-components';
 import { IoTrashOutline } from 'react-icons/io5';
 import axios from 'axios';

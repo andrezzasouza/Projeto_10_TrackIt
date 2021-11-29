@@ -1,7 +1,3 @@
-/* eslint-disable no-use-before-define */
-/* eslint-disable react/jsx-no-bind */
-/* eslint-disable no-unused-expressions */
-/* eslint-disable no-alert */
 import { IoAddSharp } from 'react-icons/io5';
 import { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -40,17 +36,19 @@ export default function Habits() {
   }
 
   function loadTasks(res) {
-    res.data.length !== 0
-      ? setHabitScreen(
-          res.data.map((currentTask, index) => (
-            <CreatedHabit
-              currentTask={currentTask}
-              habitCallToServer={habitCallToServer}
-              key={index}
-            />
-          ))
-        )
-      : setHabitScreen(<NoHabit />);
+    if (res.data.length !== 0) {
+      setHabitScreen(
+        res.data.map((currentTask, index) => (
+          <CreatedHabit
+            currentTask={currentTask}
+            habitCallToServer={habitCallToServer}
+            key={index}
+          />
+        ))
+      );
+    } else {
+      setHabitScreen(<NoHabit />);
+    }
   }
 
   function habitCallToServer() {
